@@ -52,16 +52,12 @@ class PgProvisioner:
 
         result = self.os_runner.run_cmd(
             input_command=(
-                'ansible-playbook '
-                '-i /home/student/PostgreSQL-Ansible-Automation/ansible/inventories/ '
-                '/home/student/PostgreSQL-Ansible-Automation/ansible/provision_postgresql_VM.yml '
-                '--vault-password-file /home/student/.vault_pass '
-                f'-e vm_name_user_input={name} vm_id={vm_id}'),
+                "ansible-playbook "
+                "-i /home/student/PostgreSQL-Ansible-Automation/ansible/inventories/ "
+                "/home/student/PostgreSQL-Ansible-Automation/ansible/provision_postgresql_VM.yml "
+                "--vault-password-file /home/student/.vault_pass "
+                f"-e 'vm_name_user_input={name} vm_id={vm_id}'"),
             input_data=f"{self.vault_password}\n"
         )
-
-        print("\n" + "=" * 50 + " ANSIBLE RAW OUTPUT " + "=" * 50)
-        print(f"RESULT DICT: {result}")
-        print("=" * 120 + "\n")
 
         return result
