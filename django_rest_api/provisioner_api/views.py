@@ -49,7 +49,7 @@ class PostgreSQLVMViewSet(viewsets.ModelViewSet):
             instance.ip_address = ip_sent
             instance.save()
 
-            print(f"\nThe IP {ip_trimis} was saved for the VM {instance.name}!\n")
+            print(f"\nThe IP {ip_sent} was saved for the VM {instance.name}!\n")
 
         return super().partial_update(request, *args, **kwargs)
 
