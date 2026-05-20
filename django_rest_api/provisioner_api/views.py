@@ -46,11 +46,10 @@ class PostgreSQLVMViewSet(viewsets.ModelViewSet):
         ip_sent = request.data.get('ip_address')
 
         if ip_sent:
-            instance = self.get_object()
-            instance.ip_address = ip_sent
-            instance.save()
+            pk = kwargs.get('pk')
+            PostgreSQLVM.objects.filter(pk=pk).update(ip_address=ip_sent)
 
-            print(f"\nThe IP {ip_sent} was saved for the VM {instance.name}!\n")
+            print(f"\nThe IP {ip_sent} was saved for the VM with ID {pk}\n")
 
         return response
 
