@@ -25,7 +25,7 @@ def run_ansible_provisioning_task(instance_id):
 
     result = provisioner.start_pg_vm_provisioning()
 
-    if not result['success']:
+    if result['success']:
         vm.status = "Ready"
     else:
         vm.status = "Failed"
