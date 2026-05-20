@@ -41,16 +41,17 @@ class PostgreSQLVMViewSet(viewsets.ModelViewSet):
         run_ansible_provisioning_task.delay(instance.id)
 
     def partial_update(self, request, *args, **kwargs):
-        instance = self.get_object()
+        response = super().partial_update(request, *args, **kwargs)
 
         ip_sent = request.data.get('ip_address')
 
         if ip_sent:
+            instance = self.get_object()
             instance.ip_address = ip_sent
             instance.save()
 
             print(f"\nThe IP {ip_sent} was saved for the VM {instance.name}!\n")
 
-        return super().partial_update(request, *args, **kwargs)
+        return response
 
 
