@@ -1,0 +1,55 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="x6HMTlwiLC01yA1OgvVX">
+    <mxGraphModel dx="691" dy="776" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="XbW7TL2z_Yg5VdfCYJ-6-3" edge="1" parent="1" source="XbW7TL2z_Yg5VdfCYJ-6-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="XbW7TL2z_Yg5VdfCYJ-6-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XbW7TL2z_Yg5VdfCYJ-6-9" edge="1" parent="1" source="XbW7TL2z_Yg5VdfCYJ-6-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="XbW7TL2z_Yg5VdfCYJ-6-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XbW7TL2z_Yg5VdfCYJ-6-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="POST request received" vertex="1">
+          <mxGeometry height="60" width="120" x="20" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="XbW7TL2z_Yg5VdfCYJ-6-5" edge="1" parent="1" source="XbW7TL2z_Yg5VdfCYJ-6-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="XbW7TL2z_Yg5VdfCYJ-6-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XbW7TL2z_Yg5VdfCYJ-6-10" edge="1" parent="1" source="XbW7TL2z_Yg5VdfCYJ-6-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="XbW7TL2z_Yg5VdfCYJ-6-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XbW7TL2z_Yg5VdfCYJ-6-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Task saved into Redis in-memory database" vertex="1">
+          <mxGeometry height="60" width="120" x="190" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="XbW7TL2z_Yg5VdfCYJ-6-12" edge="1" parent="1" source="XbW7TL2z_Yg5VdfCYJ-6-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="XbW7TL2z_Yg5VdfCYJ-6-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XbW7TL2z_Yg5VdfCYJ-6-13" edge="1" parent="1" source="XbW7TL2z_Yg5VdfCYJ-6-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="XbW7TL2z_Yg5VdfCYJ-6-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XbW7TL2z_Yg5VdfCYJ-6-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Celery takes the task from Redis and executes it" vertex="1">
+          <mxGeometry height="60" width="120" x="350" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="XbW7TL2z_Yg5VdfCYJ-6-15" edge="1" parent="1" source="XbW7TL2z_Yg5VdfCYJ-6-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="XbW7TL2z_Yg5VdfCYJ-6-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XbW7TL2z_Yg5VdfCYJ-6-6" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Celery finishes the task and&amp;nbsp;" vertex="1">
+          <mxGeometry height="60" width="120" x="540" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="XbW7TL2z_Yg5VdfCYJ-6-7" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Status: Started" vertex="1">
+          <mxGeometry height="60" width="120" x="50" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="XbW7TL2z_Yg5VdfCYJ-6-8" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Status: Queued" vertex="1">
+          <mxGeometry height="60" width="120" x="216" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="XbW7TL2z_Yg5VdfCYJ-6-11" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Status: Provisioning" vertex="1">
+          <mxGeometry height="60" width="120" x="420" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="XbW7TL2z_Yg5VdfCYJ-6-14" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Status: Ready/Failed" vertex="1">
+          <mxGeometry height="60" width="120" x="600" y="450" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
