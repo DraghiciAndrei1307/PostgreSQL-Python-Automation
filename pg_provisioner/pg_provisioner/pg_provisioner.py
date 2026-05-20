@@ -60,8 +60,4 @@ class PgProvisioner:
             input_data=f"{self.vault_password}\n"
         )
 
-        print("\n" + "=" * 50 + " ANSIBLE RAW OUTPUT " + "=" * 50)
-        print(f"RESULT DICT: {result}")
-        print("=" * 120 + "\n")
-
         return result
