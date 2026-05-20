@@ -7,7 +7,7 @@ between the Django API and the Ansible provisioning platform.
 from setuptools import setup, find_packages
 
 
-VERSION = '0.0.3'
+VERSION = '0.0.4'
 DESCRIPTION = 'This is the pg_provisioner module.'
 LONG_DESCRIPTION = (
     'This is the CLI interface that stands '

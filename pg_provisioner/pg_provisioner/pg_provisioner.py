@@ -46,7 +46,7 @@ class PgProvisioner:
             # add the new FileHandler to the logger
             self.logger.addHandler(self.file_handler)
 
-    def start_pg_vm_provisioning(self, name):
+    def start_pg_vm_provisioning(self, name, vm_id):
 
         self.os_runner.change_current_directory('/home/student/PostgreSQL-Ansible-Automation/ansible/')
 
@@ -56,6 +56,6 @@ class PgProvisioner:
                 '-i /home/student/PostgreSQL-Ansible-Automation/ansible/inventories/ '
                 '/home/student/PostgreSQL-Ansible-Automation/ansible/provision_postgresql_VM.yml '
                 '--vault-password-file /home/student/.vault_pass '
-                f'-e vm_name_user_input={name}'),
+                f'-e vm_name_user_input={name} vm_id={vm_id}'),
             input_data=f"{self.vault_password}\n"
         )
