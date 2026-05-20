@@ -18,5 +18,6 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class PostgreSQLVMSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = PostgreSQLVM
-        fields = ["url", "name", "hostname", "ip_address", "status", "created_at", "updated_at"]
+        fields = '__all__'
+        read_only_fields = ['status', 'ip_address']
 

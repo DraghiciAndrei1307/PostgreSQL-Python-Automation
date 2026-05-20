@@ -26,8 +26,8 @@ jobs:
           files: |
             pg_provisioner/dist/*.whl
             pg_provisioner/dist/*.tar.gz
-          tag_name: pg_provisioner-v0.0.2
-          name: Release of 'pg_provisioner' v0.0.2
+          tag_name: pg_provisioner-v0.0.3
+          name: Release of 'pg_provisioner' v0.0.3
           body: "The official release of the pg_provisioner_draghici_andrei package."
 #      - name: Build and Publish 'pg_provisioner' package to PyPi
 #        env:

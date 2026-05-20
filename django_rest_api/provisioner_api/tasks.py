@@ -23,7 +23,7 @@ def run_ansible_provisioning_task(instance_id):
 
     provisioner = PgProvisioner()
 
-    result = provisioner.start_pg_vm_provisioning()
+    result = provisioner.start_pg_vm_provisioning(name=vm.name)
 
     if result['success']:
         vm.status = "Ready"
@@ -31,4 +31,4 @@ def run_ansible_provisioning_task(instance_id):
         vm.status = "Failed"
 
     vm.save()
-    return f"Provisioning finished for {vm.hostname} with status {vm.status}. The result was {result}."
+    return f"Provisioning finished for {vm.name} with status {vm.status}."

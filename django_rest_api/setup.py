@@ -10,7 +10,7 @@ This package must be executed on the master node.
 from setuptools import setup, find_packages
 
 
-VERSION = '0.0.4'
+VERSION = '0.0.5'
 DESCRIPTION = 'This is the django_rest_api module.'
 LONG_DESCRIPTION = (
     'This is the CLI interface that stands '
