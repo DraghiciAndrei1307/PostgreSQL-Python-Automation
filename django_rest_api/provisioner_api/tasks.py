@@ -30,5 +30,5 @@ def run_ansible_provisioning_task(instance_id):
     else:
         vm.status = "Failed"
 
-    vm.save()
+    vm.save(update_fields=['status'])
     return f"Provisioning finished for {vm.name} with status {vm.status}."
