@@ -50,7 +50,7 @@ class PgProvisioner:
 
         self.os_runner.change_current_directory('/home/student/PostgreSQL-Ansible-Automation/ansible/')
 
-        return self.os_runner.run_cmd(
+        result = self.os_runner.run_cmd(
             input_command=(
                 'ansible-playbook '
                 '-i /home/student/PostgreSQL-Ansible-Automation/ansible/inventories/ '
@@ -59,3 +59,9 @@ class PgProvisioner:
                 f'-e vm_name_user_input={name} vm_id={vm_id}'),
             input_data=f"{self.vault_password}\n"
         )
+
+        print("\n" + "=" * 50 + " ANSIBLE RAW OUTPUT " + "=" * 50)
+        print(f"RESULT DICT: {result}")
+        print("=" * 120 + "\n")
+
+        return result
