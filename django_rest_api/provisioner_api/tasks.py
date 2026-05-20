@@ -31,4 +31,4 @@ def run_ansible_provisioning_task(instance_id):
         vm.status = "Failed"
 
     vm.save()
-    return f"Provisioning finished for {vm.hostname} with status {vm.status}. The result was {result}"
+    return f"Provisioning finished for {vm.hostname} with status {vm.status}. The result was {result}."
