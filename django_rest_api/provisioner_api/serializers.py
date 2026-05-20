@@ -19,5 +19,5 @@ class PostgreSQLVMSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = PostgreSQLVM
         fields = '__all__'
-        read_only_fields = ['status', 'ip_address']
+        read_only_fields = ['status']
 
