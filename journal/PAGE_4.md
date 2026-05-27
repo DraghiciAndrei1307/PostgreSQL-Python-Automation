@@ -69,6 +69,8 @@ pg-api-create-user -u <username> - e <email> -p <password>
 
 I know, the password should not be in plain text, but for an MVP is not important. Later I will deal with this problem.
 
+export DJANGO_SETTINGS_MODULE=api_config.settings
+
 ## TO-DO for tomorrow
 
 - Start documenting the project (there are some important aspects that I want to document related to Django).
