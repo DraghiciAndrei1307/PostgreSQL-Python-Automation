@@ -1,7 +1,7 @@
 from django.contrib.auth.models import Group, User
 from rest_framework import permissions, viewsets
 
-from .models import PostgreSQLVM
+from .models import PostgreSQLVM, PostgreSQLDatabase
 from .serializers import GroupSerializer, UserSerializer, PostgreSQLVMSerializer
 
 from pg_provisioner import PgProvisioner
@@ -53,4 +53,5 @@ class PostgreSQLVMViewSet(viewsets.ModelViewSet):
 
         return response
 
-
+class PostgreSQLDatabaseViewSet(viewsets.ModelViewSet):
+    queryset = PostgreSQLDatabase.objects.all().order_by("id")
