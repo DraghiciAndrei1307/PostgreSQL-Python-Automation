@@ -25,7 +25,6 @@ class PostgreSQLInstanceSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = PostgreSQLInstance
         fields = '__all__'
-        read_only_fields = ['status']
 
 class PostgreSQLDatabaseSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
