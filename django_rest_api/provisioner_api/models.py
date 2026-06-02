@@ -8,8 +8,8 @@ class PostgreSQLVM(models.Model):
 
     # ATTRIBUTES
 
-    vm_name = models.CharField(max_length=200)
-    base_vm_name = models.CharField(max_length=200, blank=True, null=True)
+    vm_name = models.CharField(max_length=200, default='')
+    base_vm_name = models.CharField(max_length=200, default='')
     ipv4_address = models.GenericIPAddressField(unique=True, blank=True, null=True)
     status = models.CharField(max_length=200, default='Started')
     created_at = models.DateTimeField(auto_now_add=True)
@@ -18,9 +18,8 @@ class PostgreSQLVM(models.Model):
     # GETTERS
     @property
     def hostname(self):
-        if self.base_vm_name:
-            return f"{self.base_vm_name}-{self.vm_name}"
-        return self.vm_name
+        return f"{self.base_vm_name}-{self.vm_name}"
+
 
     # SETTERS
 
