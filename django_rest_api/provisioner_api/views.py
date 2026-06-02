@@ -55,21 +55,21 @@ class PostgreSQLVMViewSet(viewsets.ModelViewSet):
         return response
 
 class PostgreSQLInstanceViewSet(viewsets.ModelViewSet):
-    queryset = PostgreSQLInstance.objects.all()
+    queryset = PostgreSQLInstance.objects.all().order_by("-port")
     serializer_class = PostgreSQLInstanceSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 class PostgreSQLDatabaseViewSet(viewsets.ModelViewSet):
-    queryset = PostgreSQLDatabase.objects.all()
+    queryset = PostgreSQLDatabase.objects.all().order_by("-db_name")
     serializer_class = PostgreSQLDatabaseSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 class PostgreSQLBackupViewSet(viewsets.ModelViewSet):
-    queryset = PostgreSQLBackup.objects.all()
+    queryset = PostgreSQLBackup.objects.all().order_by("-stanza")
     serializer_class = PostgreSQLBackupSerializer
     permissions_classes = [permissions.IsAuthenticated]
 
 class PostgreSQLUserViewSet(viewsets.ModelViewSet):
-    queryset = PostgreSQLUser.objects.all()
+    queryset = PostgreSQLUser.objects.all().order_by("-name")
     serializer_class = PostgreSQLUserSerializer
     permissions_classes = [permissions.IsAuthenticated]
