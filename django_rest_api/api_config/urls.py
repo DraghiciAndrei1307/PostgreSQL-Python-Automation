@@ -24,6 +24,10 @@ router = routers.DefaultRouter()
 router.register(r"users", views.UserViewSet)
 router.register(r"groups", views.GroupViewSet)
 router.register(r'vms', views.PostgreSQLVMViewSet)
+router.register(r'instances', views.PostgreSQLInstanceViewSet)
+router.register(r'dbs', views.PostgreSQLDatabaseViewSet)
+router.register(r'backups', views.PostgreSQLBackupViewSet)
+router.register(r'users', views.PostgreSQLUserViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

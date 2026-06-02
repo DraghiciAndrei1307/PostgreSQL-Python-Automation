@@ -1,7 +1,7 @@
 from django.contrib.auth.models import Group, User
 from rest_framework import serializers
 
-from .models import PostgreSQLVM, PostgreSQLDatabase, PostgreSQLBackup
+from .models import PostgreSQLVM, PostgreSQLDatabase, PostgreSQLBackup, PostgreSQLInstance, PostgreSQLUser
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -21,6 +21,12 @@ class PostgreSQLVMSerializer(serializers.HyperlinkedModelSerializer):
         fields = '__all__'
         read_only_fields = ['status']
 
+class PostgreSQLInstanceSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = PostgreSQLInstance
+        fields = '__all__'
+        read_only_fields = ['status']
+
 class PostgreSQLDatabaseSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = PostgreSQLDatabase
@@ -29,4 +35,9 @@ class PostgreSQLDatabaseSerializer(serializers.HyperlinkedModelSerializer):
 class PostgreSQLBackupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = PostgreSQLBackup
+        fields = '__all__'
+
+class PostgreSQLUserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = PostgreSQLUser
         fields = '__all__'

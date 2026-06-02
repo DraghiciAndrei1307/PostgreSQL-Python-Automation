@@ -8,7 +8,6 @@ class PostgreSQLVM(models.Model):
 
     # ATTRIBUTES
 
-    id = models.AutoField(primary_key=True)
     vm_name = models.CharField(max_length=200)
     base_vm_name = models.CharField(max_length=200)
     ipv4_address = models.GenericIPAddressField(unique=True, blank=True, null=True)
@@ -44,9 +43,11 @@ class PostgreSQLInstance(models.Model):
 
     # ATTRIBUTES
 
-    id = models.AutoField(primary_key=True)
     port = models.IntegerField(default=5432)
     version = models.CharField(max_length=10)
+
+    # Foreign Keys
+
     vm = models.ForeignKey('PostgreSQLVM', on_delete=models.CASCADE)
 
     # SETTERS
@@ -72,10 +73,7 @@ class PostgreSQLDatabase(models.Model):
 
     # ATTRIBUTES
 
-    id = models.AutoField(primary_key=True)
     db_name = models.CharField(max_length=200)
-    instance = models.ForeignKey('PostgreSQLInstance', on_delete=models.CASCADE)
-    owner = models.ForeignKey('PostgreSQLUser', on_delete=models.CASCADE)
     encoding = models.CharField(max_length=200)
     collate = models.CharField(max_length=200)
     ctype = models.CharField(max_length=200)
@@ -83,6 +81,11 @@ class PostgreSQLDatabase(models.Model):
     size = models.CharField(max_length=200) # this needs adjustment
     tablespace = models.CharField(max_length=200)
     description = models.CharField(max_length=200)
+
+    # Foreign Keys
+
+    instance = models.ForeignKey('PostgreSQLInstance', on_delete=models.CASCADE)
+    owner = models.ForeignKey('PostgreSQLUser', on_delete=models.CASCADE)
 
     # GETTERS
 
@@ -107,8 +110,7 @@ class PostgreSQLBackup(models.Model):
 
     # ATTRIBUTES
 
-    id = models.AutoField(primary_key=True)
-    instance = models.ForeignKey('PostgreSQLInstance', on_delete=models.CASCADE)
+
     type = models.CharField(max_length=200)
     stanza = models.CharField(max_length=200)
     start_at = models.DateTimeField()
@@ -119,6 +121,10 @@ class PostgreSQLBackup(models.Model):
     cluster_backup_size = models.CharField(max_length=200) # needs adjustment
     backup_size = models.CharField(max_length=200) # needs adjustment
     backup_set_size = models.CharField(max_length=200) # needs adjustment
+
+    # Foreign Keys
+
+    instance = models.ForeignKey('PostgreSQLInstance', on_delete=models.CASCADE)
 
     # GETTERS
 
@@ -134,7 +140,6 @@ class PostgreSQLUser(models.Model):
 
     # ATTRIBUTES
 
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200, unique=True)
 
     # OPERATORS

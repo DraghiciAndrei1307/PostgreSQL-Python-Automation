@@ -1,8 +1,9 @@
 from django.contrib.auth.models import Group, User
 from rest_framework import permissions, viewsets
 
-from .models import PostgreSQLVM, PostgreSQLDatabase
-from .serializers import GroupSerializer, UserSerializer, PostgreSQLVMSerializer
+from .models import PostgreSQLVM, PostgreSQLDatabase, PostgreSQLInstance, PostgreSQLBackup, PostgreSQLUser
+from .serializers import GroupSerializer, UserSerializer, PostgreSQLVMSerializer, PostgreSQLInstanceSerializer, \
+    PostgreSQLDatabaseSerializer, PostgreSQLBackupSerializer, PostgreSQLUserSerializer
 
 from pg_provisioner import PgProvisioner
 
@@ -53,5 +54,22 @@ class PostgreSQLVMViewSet(viewsets.ModelViewSet):
 
         return response
 
+class PostgreSQLInstanceViewSet(viewsets.ModelViewSet):
+    queryset = PostgreSQLInstance.objects.all()
+    serializer_class = PostgreSQLInstanceSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 class PostgreSQLDatabaseViewSet(viewsets.ModelViewSet):
-    queryset = PostgreSQLDatabase.objects.all().order_by("id")
+    queryset = PostgreSQLDatabase.objects.all()
+    serializer_class = PostgreSQLDatabaseSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class PostgreSQLBackupViewSet(viewsets.ModelViewSet):
+    queryset = PostgreSQLBackup.objects.all()
+    serializer_class = PostgreSQLBackupSerializer
+    permissions_classes = [permissions.IsAuthenticated]
+
+class PostgreSQLUserViewSet(viewsets.ModelViewSet):
+    queryset = PostgreSQLUser.objects.all()
+    serializer_class = PostgreSQLUserSerializer
+    permissions_classes = [permissions.IsAuthenticated]
