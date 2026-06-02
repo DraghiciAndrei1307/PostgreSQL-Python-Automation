@@ -44,11 +44,11 @@ class PostgreSQLVMViewSet(viewsets.ModelViewSet):
     def partial_update(self, request, *args, **kwargs):
         response = super().partial_update(request, *args, **kwargs)
 
-        ip_sent = request.data.get('ip_address')
+        ip_sent = request.data.get('ipv4_address')
 
         if ip_sent:
             pk = kwargs.get('pk')
-            PostgreSQLVM.objects.filter(pk=pk).update(ip_address=ip_sent)
+            PostgreSQLVM.objects.filter(pk=pk).update(ipv4_address=ip_sent)
 
             print(f"\nThe IP {ip_sent} was saved for the VM with ID {pk}\n")
 
