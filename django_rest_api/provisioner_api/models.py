@@ -78,7 +78,7 @@ class PostgreSQLDatabase(models.Model):
     encoding = models.CharField(max_length=200)
     collate = models.CharField(max_length=200)
     ctype = models.CharField(max_length=200)
-    access_privileges = models.CharField(max_length=200)
+    access_privileges = models.CharField(max_length=200, blank=True, default='')
     size = models.CharField(max_length=200) # this needs adjustment
     tablespace = models.CharField(max_length=200)
     description = models.CharField(max_length=200)
