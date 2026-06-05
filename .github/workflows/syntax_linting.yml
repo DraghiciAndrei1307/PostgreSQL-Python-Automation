@@ -7,7 +7,7 @@ on:
       - '**.py'
 jobs:
   syntax_linting:
-    runs-on: ubuntu-lastest
+    runs-on: ubuntu-latest
     steps:
       - name: "Get Code"
         uses: actions/checkout@v6
