@@ -4,6 +4,7 @@
 
 from django.db import models
 
+
 class PostgreSQLVM(models.Model):
 
     """ Represents a VM provisioned with PostgreSQL."""
@@ -12,7 +13,11 @@ class PostgreSQLVM(models.Model):
 
     vm_name = models.CharField(max_length=200, default='')
     base_vm_name = models.CharField(max_length=200, default='')
-    ipv4_address = models.GenericIPAddressField(unique=True, blank=True, null=True)
+    ipv4_address = models.GenericIPAddressField(
+        unique=True,
+        blank=True,
+        null=True
+    )
     status = models.CharField(max_length=200, default='Started')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -26,7 +31,6 @@ class PostgreSQLVM(models.Model):
         """
 
         return f"{self.base_vm_name}-{self.vm_name}"
-
 
     # SETTERS
 
@@ -49,6 +53,7 @@ class PostgreSQLVM(models.Model):
                 name='unique_hostname_constraint',
             ),
         ]
+
 
 class PostgreSQLInstance(models.Model):
     """Represents PostgreSQL cluster."""
@@ -82,6 +87,7 @@ class PostgreSQLInstance(models.Model):
             )
         ]
 
+
 class PostgreSQLDatabase(models.Model):
 
     """Represents the PostgreSQL database."""
@@ -92,14 +98,21 @@ class PostgreSQLDatabase(models.Model):
     encoding = models.CharField(max_length=200)
     collate = models.CharField(max_length=200)
     ctype = models.CharField(max_length=200)
-    access_privileges = models.CharField(max_length=200, blank=True, default='')
-    size = models.CharField(max_length=200) # this needs adjustment
+    access_privileges = models.CharField(
+        max_length=200,
+        blank=True,
+        default=''
+    )
+    size = models.CharField(max_length=200)  # this needs adjustment
     tablespace = models.CharField(max_length=200)
     description = models.CharField(max_length=200)
 
     # Foreign Keys
 
-    instance = models.ForeignKey('PostgreSQLInstance', on_delete=models.CASCADE)
+    instance = models.ForeignKey(
+        'PostgreSQLInstance',
+        on_delete=models.CASCADE
+    )
     owner = models.ForeignKey('PostgreSQLUser', on_delete=models.CASCADE)
 
     # GETTERS
@@ -109,7 +122,11 @@ class PostgreSQLDatabase(models.Model):
     # OPERATORS
 
     def __str__(self):
-        return f"PostgreSQL Instance: {self.instance}; DB_name: {self.db_name}; Owner: {self.owner}"
+        return (
+            f"PostgreSQL Instance: {self.instance}; "
+            f"DB_name: {self.db_name}; "
+            f"Owner: {self.owner}"
+        )
 
     class Meta:
         """
@@ -122,12 +139,12 @@ class PostgreSQLDatabase(models.Model):
             )
         ]
 
+
 class PostgreSQLBackup(models.Model):
 
     """Represents the PostgreSQL backup."""
 
     # ATTRIBUTES
-
 
     type = models.CharField(max_length=200)
     stanza = models.CharField(max_length=200)
@@ -135,14 +152,17 @@ class PostgreSQLBackup(models.Model):
     stop_at = models.DateTimeField()
     wal_start = models.CharField(max_length=200)
     wal_stop = models.CharField(max_length=200)
-    cluster_size = models.CharField(max_length=200) # needs adjustment
-    cluster_backup_size = models.CharField(max_length=200) # needs adjustment
-    backup_size = models.CharField(max_length=200) # needs adjustment
-    backup_set_size = models.CharField(max_length=200) # needs adjustment
+    cluster_size = models.CharField(max_length=200)  # needs adjustment
+    cluster_backup_size = models.CharField(max_length=200)  # needs adjustment
+    backup_size = models.CharField(max_length=200)  # needs adjustment
+    backup_set_size = models.CharField(max_length=200)  # needs adjustment
 
     # Foreign Keys
 
-    instance = models.ForeignKey('PostgreSQLInstance', on_delete=models.CASCADE)
+    instance = models.ForeignKey(
+        'PostgreSQLInstance',
+        on_delete=models.CASCADE
+    )
 
     # GETTERS
 
@@ -152,6 +172,7 @@ class PostgreSQLBackup(models.Model):
 
     def __str__(self):
         return f"PostgreSQL Instance: {self.instance}"
+
 
 class PostgreSQLUser(models.Model):
     """

@@ -32,6 +32,12 @@ router.register(r'psql-users', views.PostgreSQLUserViewSet)
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
-    path('api/', include(router.urls) ),
+    path(
+        "api-auth/",
+        include(
+            "rest_framework.urls",
+            namespace="rest_framework"
+        )
+    ),
+    path('api/', include(router.urls)),
 ]

@@ -37,6 +37,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         model = Group
         fields = ["url", "name"]
 
+
 class PostgreSQLVMSerializer(serializers.HyperlinkedModelSerializer):
     """
         This is the serializer for the PostgreSQLVM model.
@@ -52,6 +53,7 @@ class PostgreSQLVMSerializer(serializers.HyperlinkedModelSerializer):
         fields = '__all__'
         read_only_fields = ['status']
 
+
 class PostgreSQLInstanceSerializer(serializers.HyperlinkedModelSerializer):
     """
         This is the serializer for the PostgreSQLInstance model.
@@ -65,6 +67,7 @@ class PostgreSQLInstanceSerializer(serializers.HyperlinkedModelSerializer):
 
         model = PostgreSQLInstance
         fields = '__all__'
+
 
 class PostgreSQLDatabaseSerializer(serializers.HyperlinkedModelSerializer):
     """
@@ -80,6 +83,7 @@ class PostgreSQLDatabaseSerializer(serializers.HyperlinkedModelSerializer):
         model = PostgreSQLDatabase
         fields = '__all__'
 
+
 class PostgreSQLBackupSerializer(serializers.HyperlinkedModelSerializer):
     """
         This is the serializer for the PostgreSQLBackup model.
@@ -93,6 +97,7 @@ class PostgreSQLBackupSerializer(serializers.HyperlinkedModelSerializer):
 
         model = PostgreSQLBackup
         fields = '__all__'
+
 
 class PostgreSQLUserSerializer(serializers.HyperlinkedModelSerializer):
     """

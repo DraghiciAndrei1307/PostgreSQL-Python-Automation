@@ -12,6 +12,7 @@ from .serializers import GroupSerializer, UserSerializer, \
     PostgreSQLDatabaseSerializer, PostgreSQLBackupSerializer, \
     PostgreSQLUserSerializer
 
+
 class UserViewSet(viewsets.ModelViewSet):
     """
         API endpoint that allows users to be viewed or edited.
@@ -31,10 +32,12 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+
 class PostgreSQLVMViewSet(viewsets.ModelViewSet):
     """
         This is the ViewSet for the PostgreSQLVM model.
     """
+
     queryset = PostgreSQLVM.objects.all().order_by("-created_at")
     serializer_class = PostgreSQLVMSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -75,34 +78,42 @@ class PostgreSQLVMViewSet(viewsets.ModelViewSet):
 
         return response
 
+
 class PostgreSQLInstanceViewSet(viewsets.ModelViewSet):
     """
         This is the ViewSet for the PostgreSQLInstance model.
     """
+
     queryset = PostgreSQLInstance.objects.all().order_by("-port")
     serializer_class = PostgreSQLInstanceSerializer
     permission_classes = [permissions.IsAuthenticated]
+
 
 class PostgreSQLDatabaseViewSet(viewsets.ModelViewSet):
     """
         This is the ViewSet for the PostgreSQLDatabase model.
     """
+
     queryset = PostgreSQLDatabase.objects.all().order_by("-db_name")
     serializer_class = PostgreSQLDatabaseSerializer
     permission_classes = [permissions.IsAuthenticated]
+
 
 class PostgreSQLBackupViewSet(viewsets.ModelViewSet):
     """
         This is the ViewSet for the PostgreSQLBackup model.
     """
+
     queryset = PostgreSQLBackup.objects.all().order_by("-stanza")
     serializer_class = PostgreSQLBackupSerializer
     permissions_classes = [permissions.IsAuthenticated]
+
 
 class PostgreSQLUserViewSet(viewsets.ModelViewSet):
     """
         This is the ViewSet for the PostgreSQLUser model.
     """
+
     queryset = PostgreSQLUser.objects.all().order_by("-name")
     serializer_class = PostgreSQLUserSerializer
     permissions_classes = [permissions.IsAuthenticated]

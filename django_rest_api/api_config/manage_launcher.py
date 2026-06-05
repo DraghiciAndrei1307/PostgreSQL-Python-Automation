@@ -9,6 +9,7 @@ import sys
 import argparse
 import django
 
+
 def setup_django():
     """
         This function creates an environment variable
@@ -17,6 +18,7 @@ def setup_django():
 
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'api_config.settings')
     django.setup()
+
 
 def main():
     """
@@ -38,6 +40,7 @@ def main():
         args.append('0.0.0.0:9001')
 
     execute_from_command_line(args)
+
 
 def create_superuser():
     """
@@ -93,6 +96,7 @@ def create_superuser():
     else:
         print("Your superuser already exists.")
 
+
 def create_user():
 
     """
@@ -108,10 +112,30 @@ def create_user():
 
     user = get_user_model()
 
-    parser = argparse.ArgumentParser(description='Create Django superuser')
-    parser.add_argument('-u', '--username', required=True, help='Username', default='neo')
-    parser.add_argument('-e', '--email', required=True, help='Email', default='neo@example.com')
-    parser.add_argument('-p', '--password', required=True, help='Password', default='password123')
+    parser = argparse.ArgumentParser(
+        description='Create Django superuser'
+    )
+    parser.add_argument(
+        '-u',
+        '--username',
+        required=True,
+        help='Username',
+        default='neo'
+    )
+    parser.add_argument(
+        '-e',
+        '--email',
+        required=True,
+        help='Email',
+        default='neo@example.com'
+    )
+    parser.add_argument(
+        '-p',
+        '--password',
+        required=True,
+        help='Password',
+        default='password123'
+    )
 
     args = parser.parse_args()
 

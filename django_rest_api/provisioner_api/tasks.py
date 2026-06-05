@@ -17,8 +17,6 @@ django.setup()
 app = Celery('provisioner', broker='redis://localhost:6379/0')
 
 
-
-
 @app.task
 def run_ansible_provisioning_task(instance_id):
 
