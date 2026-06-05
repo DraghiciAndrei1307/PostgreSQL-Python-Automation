@@ -1,0 +1,38 @@
+name: "Syntax Linting"
+on:
+  push:
+    branches:
+      - main
+jobs:
+  syntax_linting:
+    runs-on: ubuntu-lastest
+    steps:
+      - name: "Get Code"
+        uses: actions/checkout@v6
+      - name: "Install pylint and flake8"
+        run: |
+          pip install pylint flake8
+      - name: "Perform linting with pylint"
+        run: |
+          pylint django_rest_api/
+          pylint os_executor/
+          pylint os_runner/
+          pylint pg_provisioner/
+          pylint pg_provisioner_cli/
+          pylint pg_runner/
+          pylint pg_runner_cli/
+          pylint os_runner_tester.py
+          pylint setup.py
+          pylint test.py
+      - name: "Perform linting with flake8"
+        run: |
+          flake8 django_rest_api/
+          flake8 os_executor/
+          flake8 os_runner/
+          flake8 pg_provisioner/
+          flake8 pg_provisioner_cli/
+          flake8 pg_runner/
+          flake8 pg_runner_cli/
+          flake8 os_runner_tester.py
+          flake8 setup.py
+          flake8 test.py
