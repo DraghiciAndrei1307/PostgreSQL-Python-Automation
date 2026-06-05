@@ -6,12 +6,14 @@ import click
 
 from os_runner import OsRunner
 
+
 def setup_os_runner():
     """
     Sets up the os runner.
     :return:
     """
     return OsRunner()
+
 
 @click.group()
 @click.pass_context
@@ -23,18 +25,17 @@ def cli(ctx):
     """
     ctx.ensure_object(dict)
 
-@cli.command()
-@click.option('--count',
-              type=int,
-              default=1,
-              help='Number of greetings.'
-              )
-@click.option('--name',
-              type=str,
-              prompt='Your name',
-              help='The person to greet.'
-              )
-
+# @cli.command()
+# @click.option('--count',
+#               type=int,
+#               default=1,
+#               help='Number of greetings.'
+#               )
+# @click.option('--name',
+#               type=str,
+#               prompt='Your name',
+#               help='The person to greet.'
+#               )
 # @click.pass_context
 # def hello(ctx, count, name):
 #     """
@@ -56,6 +57,7 @@ def cli(ctx):
 #     """
 #     click.echo(f"Goodbye {name}!")
 
+
 @cli.command()
 @click.option(
     '--path',
@@ -70,6 +72,7 @@ def list_entries(ctx, path):
     """
     os_runner = setup_os_runner()
     print(os_runner.list_entries_in_path(path=path))
+
 
 @cli.command()
 @click.option(
@@ -86,6 +89,7 @@ def change_directory(ctx, path):
 
     os_runner = setup_os_runner()
     print(os_runner.change_current_directory(path=path))
+
 
 @cli.command()
 @click.option(
@@ -119,6 +123,7 @@ def create_file(ctx, name, path, mode):
     os_runner = setup_os_runner()
     print(os_runner.create_file(name=name, path=path, mode=mode))
 
+
 @cli.command()
 @click.option(
     '--path',
@@ -143,6 +148,7 @@ def change_access_rights(ctx, path, mode):
     """
     os_runner = setup_os_runner()
     print(os_runner.change_mode(path, mode))
+
 
 @cli.command()
 @click.option(
@@ -177,6 +183,7 @@ def create_folder(ctx, path, name, mode):
     os_runner = setup_os_runner()
     print(os_runner.create_folder(path=path, name=name, mode=mode))
 
+
 @cli.command()
 @click.option(
     '--src',
@@ -201,6 +208,7 @@ def move(ctx, src, dest):
     """
     os_runner = setup_os_runner()
     print(os_runner.move(source=src, destination=dest))
+
 
 @cli.command(name="run-command")
 @click.option(
