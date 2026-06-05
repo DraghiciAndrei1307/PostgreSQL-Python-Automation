@@ -1,15 +1,19 @@
-
 """
- This module was created to run simple PostgreSQL management procedures
+    This module was created to run simple
+    PostgreSQL management procedures.
 """
 
 import os
-from os_runner import OsRunner
 import logging
+
+from os_runner import OsRunner
 
 
 class PgRunner:
-
+    """
+        This class is used for running the
+        PostgreSQL management procedures.
+    """
     def __init__(self):
         self.os_runner = OsRunner()
         self.become_password = os.environ.get('BECOME_PASSWORD')
@@ -60,9 +64,9 @@ class PgRunner:
         )
 
         if 'Active: active (running)' in result['stdout']:
-            self.logger.info(f"PostgreSQL 14 database server is ACTIVE.")
+            self.logger.info("PostgreSQL 14 database server is ACTIVE.")
         else:
-            self.logger.info(f"PostgreSQL 14 database server is INACTIVE.")
+            self.logger.info("PostgreSQL 14 database server is INACTIVE.")
 
     def start_pg(self, version):
         """
@@ -75,9 +79,9 @@ class PgRunner:
         )
 
         if result['success']:
-            self.logger.info(f"PostgreSQL 14 database server is UP and RUNNING.")
+            self.logger.info("PostgreSQL 14 database server is UP and RUNNING.")
         else:
-            self.logger.error(f"PostgreSQL 14 database encountered an error: {result['stderr']}")
+            self.logger.error("PostgreSQL 14 database encountered an error: {result['stderr']}")
 
     def stop_pg(self, version):
         """
@@ -90,9 +94,15 @@ class PgRunner:
         )
 
         if result['success']:
-            self.logger.info(f"PostgreSQL 14 database server is STOPPED.")
+            self.logger.info(
+                "PostgreSQL 14 database server is STOPPED."
+            )
         else:
-            self.logger.error(f"PostgreSQL 14 database encountered an error: {result['stderr']}")
+            self.logger.error(
+                "PostgreSQL 14 database encountered "
+                "an error: %s",
+                result['stderr']
+            )
 
     def backup_pg(self):
         """
@@ -108,14 +118,16 @@ class PgRunner:
         )
 
         if result['success']:
-            self.logger.info(f"Full backup {} ")
+            self.logger.info("Full backup successful.")
         else:
-            self.logger.error(f"PostgreSQL backup_pg: {result['stderr']}")
+            self.logger.error(
+                "PostgreSQL backup_pg: %s",
+                result['stderr']
+            )
 
     def restore_pg(self, version=14 , path='/var/lib/pgsql'):
         """
-        This method performs database 'default' restore.
-        :return:
+            This method performs database 'default' restore.
         """
 
         pg_data_path= path + version + '/data'
@@ -128,16 +140,13 @@ class PgRunner:
 
         if remove_pg_data_contents_result['success']:
 
-            result = self.os_runner.run_cmd(
+            self.os_runner.run_cmd(
                 input_command='sudo -S -u postgres pgbackrest --stanza=demo restore'
             )
 
-
-
-
     def backup_info(self):
         """
-        This method checks the backup history.
+            This method checks the backup history.
         """
 
         result = self.os_runner.run_cmd(
@@ -157,15 +166,19 @@ class PgRunner:
                 output += _ + '\n'
 
             self.logger.info(
-                f"\nPostgreSQL 14 database BACKUPS:\n"
-                f"{output}"
+                "\nPostgreSQL 14 database BACKUPS:\n"
+                "%s",
+                output
             )
         else:
-            self.logger.error(f"The backup info cannot be loaded due to: {result['stderr']}")
+            self.logger.error(
+                "The backup info cannot be loaded due to: %s",
+                result['stderr']
+            )
 
     def check_stanza(self):
         """
-        This method checks the pgbackrest stanza.
+            This method checks the pgbackrest stanza.
         """
         result = self.os_runner.run_cmd(
             input_command='sudo -S -u postgres pgbackrest '
@@ -176,6 +189,14 @@ class PgRunner:
         )
 
         if result['success']:
-            self.logger.info(f"\nPostgreSQL 14 database STANZA: \n{result['stdout']}")
+            self.logger.info(
+                "\nPostgreSQL 14 database "
+                "STANZA: %s\n",
+                result['stdout']
+            )
         else:
-            self.logger.error(f"PostgreSQL stanza info cannot be checked due to: {result['stderr']}")
+            self.logger.error(
+                "PostgreSQL stanza info cannot "
+                "be checked due to: %s",
+                result['stderr']
+            )
