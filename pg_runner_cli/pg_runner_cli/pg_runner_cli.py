@@ -3,7 +3,6 @@ This module acts as a CLI interface for pg_runner.
 """
 import click
 
-from pg_provisioner.pg_provisioner import PgProvisioner
 from pg_runner import PgRunner
 
 # ------------------ PgRunner functions ------------------------ #
@@ -121,4 +120,3 @@ def check_stanza(ctx):
     pg_runner.check_stanza()
 
 # -------------------------------------------------------------- #
-
