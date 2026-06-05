@@ -12,9 +12,9 @@ jobs:
     steps:
       - name: "Get Code"
         uses: actions/checkout@v6
-      - name: "Install pylint and flake8"
+      - name: "Install requirements"
         run: |
-          pip install pylint flake8
+          pip install -r requirements.txt
       - name: "Perform linting with pylint"
         run: |
           pylint django_rest_api/ --disable=E1101,E0401,R0901,R0903,C0415
