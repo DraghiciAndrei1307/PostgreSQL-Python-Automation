@@ -51,7 +51,7 @@ class PgProvisioner:
             # add the new FileHandler to the logger
             self.logger.addHandler(self.file_handler)
 
-    def start_pg_vm_provisioning(self, name, base, vm_id):
+    def start_pg_vm_provisioning(self, name='test', base='bronze', vm_id='1'):
         """
             This method is used to trigger the
             provisioning procedure.
