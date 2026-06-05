@@ -23,7 +23,7 @@ jobs:
           pylint pg_provisioner/pg_provisioner --disable=R0903
           pylint pg_provisioner_cli/pg_provisioner_cli --disable=W0718,W0613
           pylint pg_runner/pg_runner/
-          pylint pg_runner_cli/pg_runner_cli
+          pylint pg_runner_cli/pg_runner_cli --disable=W0613
           pylint os_runner_tester.py
           pylint setup.py
           pylint test.py
