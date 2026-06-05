@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'django_rest_api/**'
   workflow_dispatch:
 jobs:
   publish:

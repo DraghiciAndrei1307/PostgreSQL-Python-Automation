@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - '**.py'
 jobs:
   syntax_linting:
     runs-on: ubuntu-lastest

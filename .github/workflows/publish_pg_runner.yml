@@ -1,5 +1,10 @@
 name: Publish 'pg_runner' Package (PyPI & GitHub)
-on: push
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'pg_runner/**'
 jobs:
   publish:
     runs-on: ubuntu-latest

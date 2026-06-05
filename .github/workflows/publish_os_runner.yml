@@ -1,5 +1,10 @@
 name: Publish 'os_runner' Package (PyPI & GitHub)
-on: push
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'os_runner/**'
 jobs:
   publish:
     runs-on: ubuntu-latest

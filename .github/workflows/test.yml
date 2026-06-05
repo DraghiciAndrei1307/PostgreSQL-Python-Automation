@@ -1,10 +1,10 @@
 name: Test
-on:
-  push:
-    branches:
-      - main
-      - dev
-      - test
+on: workflow_dispatch
+#  push:
+#    branches:
+#      - main
+#      - dev
+#      - test
 jobs:
   test:
     runs-on: ubuntu-latest

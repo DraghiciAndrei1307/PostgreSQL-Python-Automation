@@ -1,5 +1,10 @@
 name: Publish 'os_executor' Package (PyPI & GitHub)
-on: push
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'os_executor/**'
 jobs:
   publish:
     runs-on: ubuntu-latest
