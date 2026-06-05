@@ -5,6 +5,7 @@ on:
       - main
     paths:
       - '**.py'
+  workflow_dispatch:
 jobs:
   syntax_linting:
     runs-on: ubuntu-latest
