@@ -1,6 +1,8 @@
-from django.db import models
+"""
+    In this module we define our models.
+"""
 
-# Create your models here.
+from django.db import models
 
 class PostgreSQLVM(models.Model):
 
@@ -18,6 +20,11 @@ class PostgreSQLVM(models.Model):
     # GETTERS
     @property
     def hostname(self):
+        """
+            Returns the hostname of this VM.
+            This is a getter.
+        """
+
         return f"{self.base_vm_name}-{self.vm_name}"
 
 
@@ -32,6 +39,10 @@ class PostgreSQLVM(models.Model):
     # CONSTRAINTS
 
     class Meta:
+        """
+            Here we define the unique constraints.
+        """
+
         constraints = [
             models.UniqueConstraint(
                 fields=['vm_name', 'base_vm_name'],
@@ -56,11 +67,14 @@ class PostgreSQLInstance(models.Model):
     # OPERATORS
 
     def __str__(self):
-        return f"VM: {self.vm}; Instance ID: {self.id}; Port: {self.port}"
+        return f"VM: {self.vm}; Port: {self.port}"
 
     # CONSTRAINTS
 
     class Meta:
+        """
+            Here we define the unique constraints.
+        """
         constraints = [
             models.UniqueConstraint(
                 fields=['vm', 'port'],
@@ -98,6 +112,9 @@ class PostgreSQLDatabase(models.Model):
         return f"PostgreSQL Instance: {self.instance}; DB_name: {self.db_name}; Owner: {self.owner}"
 
     class Meta:
+        """
+            Here we define the unique constraints.
+        """
         constraints = [
             models.UniqueConstraint(
                 fields=['db_name', 'instance'],
@@ -134,10 +151,12 @@ class PostgreSQLBackup(models.Model):
     # OPERATORS
 
     def __str__(self):
-        return f"PostgreSQL Instance: {self.instance} Backup ID: {self.id}"
+        return f"PostgreSQL Instance: {self.instance}"
 
 class PostgreSQLUser(models.Model):
-    """Represents the PostgreSQL user."""
+    """
+        Represents the PostgreSQL user.
+    """
 
     # ATTRIBUTES
 
