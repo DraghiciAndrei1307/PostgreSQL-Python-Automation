@@ -28,9 +28,8 @@ def cli(ctx):
 @click.pass_context
 def provision_new_pg_vm(ctx):
     """
-    Method that uses the pg_provisioner to start
-    the PostgreSQL VM provisioning process.
-    :return:
+        Method that uses the pg_provisioner to start
+        the PostgreSQL VM provisioning process.
     """
 
     print("DEBUG: Start provisioning command...")
@@ -40,7 +39,7 @@ def provision_new_pg_vm(ctx):
             f"DEBUG: PgProvisioner instantiated. "
             f"Vault pass set: {bool(pg_provisioner.vault_password)}"
         )
-        pg_provisioner.start_pg_vm_provisioning()
+        pg_provisioner.start_pg_vm_provisioning(name='test', base='bronze', vm_id='1')
         print("DEBUG: Command sent to OsRunner.")
     except Exception as e:
         print(f"DEBUG ERROR: {e}")
