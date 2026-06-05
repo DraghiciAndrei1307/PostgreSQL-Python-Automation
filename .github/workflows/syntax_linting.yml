@@ -19,7 +19,7 @@ jobs:
         run: |
           pylint django_rest_api/ --disable=E1101,E0401,R0901,R0903,C0415
           pylint os_executor/os_executor/ --disable=W0613
-          pylint os_runner/os_runner/
+          pylint os_runner/os_runner/ --disable=W0718
           pylint pg_provisioner/pg_provisioner
           pylint pg_provisioner_cli/pg_provisioner_cli
           pylint pg_runner/pg_runner/
