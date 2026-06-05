@@ -3,10 +3,15 @@
 """
 
 import os
-from os_runner import OsRunner
 import logging
+from os_runner import OsRunner
 
 class PgProvisioner:
+
+    """
+        This class contains the logic that triggers
+        the provisioning procedure of the PostgreSQL VM.
+    """
 
     def __init__(self):
         self.os_runner = OsRunner()
@@ -47,8 +52,14 @@ class PgProvisioner:
             self.logger.addHandler(self.file_handler)
 
     def start_pg_vm_provisioning(self, name, base, vm_id):
+        """
+            This method is used to trigger the
+            provisioning procedure.
+        """
 
-        self.os_runner.change_current_directory('/home/student/PostgreSQL-Ansible-Automation/ansible/')
+        self.os_runner.change_current_directory(
+            '/home/student/PostgreSQL-Ansible-Automation/ansible/'
+        )
 
         result = self.os_runner.run_cmd(
             input_command=(
@@ -56,7 +67,9 @@ class PgProvisioner:
                 '-i /home/student/PostgreSQL-Ansible-Automation/ansible/inventories/ '
                 '/home/student/PostgreSQL-Ansible-Automation/ansible/provision_postgresql_VM.yml '
                 '--vault-password-file /home/student/.vault_pass '
-                f'-e vm_name_user_input="{name}" -e base_vm_name_user_input="{base}" -e vm_id="{vm_id}"'),
+                f'-e vm_name_user_input="{name}" '
+                f'-e base_vm_name_user_input="{base}" '
+                f'-e vm_id="{vm_id}"'),
             input_data=f"{self.vault_password}\n"
         )
 
