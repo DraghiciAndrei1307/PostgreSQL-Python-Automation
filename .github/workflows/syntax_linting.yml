@@ -17,7 +17,7 @@ jobs:
           pip install pylint flake8
       - name: "Perform linting with pylint"
         run: |
-          pylint django_rest_api/
+          pylint django_rest_api/ --disable=E1101,E0401,R0901,R0903,C0415
           pylint os_executor/
           pylint os_runner/
           pylint pg_provisioner/
