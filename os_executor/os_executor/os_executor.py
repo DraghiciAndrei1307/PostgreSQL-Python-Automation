@@ -1,3 +1,7 @@
+"""
+    This module contains the os_executor logic.
+"""
+
 import click
 
 from os_runner import OsRunner
@@ -13,11 +17,9 @@ def setup_os_runner():
 @click.pass_context
 def cli(ctx):
     """
-    This is a group command. We create a group for the future commands
-    that we will implement in the future. In this command, we can load
-     configuration files.
-    :param ctx:
-    :return:
+        This is a group command. We create a group for the future commands
+        that we will implement in the future. In this command, we can load
+        configuration files.
     """
     ctx.ensure_object(dict)
 
@@ -32,26 +34,27 @@ def cli(ctx):
               prompt='Your name',
               help='The person to greet.'
               )
-@click.pass_context
-def hello(ctx, count, name):
-    """
-    Command that greets NAME for a total of COUNT times.
-    """
-    for x in range(count):
-        click.echo(f"Hello {name}!")
 
-@cli.command()
-@click.option('--name',
-              type=str,
-              prompt='Your name',
-              help='The person to say goodbye to.'
-              )
-@click.pass_context
-def goodbye(ctx, name):
-    """
-    Command that says goodbye NAME.
-    """
-    click.echo(f"Goodbye {name}!")
+# @click.pass_context
+# def hello(ctx, count, name):
+#     """
+#     Command that greets NAME for a total of COUNT times.
+#     """
+#     for x in range(count):
+#         click.echo(f"Hello {name}!")
+
+# @cli.command()
+# @click.option('--name',
+#               type=str,
+#               prompt='Your name',
+#               help='The person to say goodbye to.'
+#               )
+# @click.pass_context
+# def goodbye(ctx, name):
+#     """
+#     Command that says goodbye NAME.
+#     """
+#     click.echo(f"Goodbye {name}!")
 
 @cli.command()
 @click.option(
@@ -63,10 +66,7 @@ def goodbye(ctx, name):
 @click.pass_context
 def list_entries(ctx, path):
     """
-    Command that lists the entries for a specific path.
-    :param ctx:
-    :param path:
-    :return:
+        Command that lists the entries for a specific path.
     """
     os_runner = setup_os_runner()
     print(os_runner.list_entries_in_path(path=path))
@@ -81,11 +81,9 @@ def list_entries(ctx, path):
 @click.pass_context
 def change_directory(ctx, path):
     """
-    Command that changes the directory to a specific path.
-    :param ctx:
-    :param path:
-    :return:
+        Command that changes the directory to a specific path.
     """
+
     os_runner = setup_os_runner()
     print(os_runner.change_current_directory(path=path))
 
