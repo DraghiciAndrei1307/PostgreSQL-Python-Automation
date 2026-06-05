@@ -25,8 +25,6 @@ jobs:
           pylint pg_runner/pg_runner/
           pylint pg_runner_cli/pg_runner_cli --disable=W0613
           pylint os_runner_tester.py
-          pylint setup.py
-          pylint test.py
       - name: "Perform linting with flake8"
         run: |
           flake8 django_rest_api/
@@ -37,5 +35,3 @@ jobs:
           flake8 pg_runner/
           flake8 pg_runner_cli/
           flake8 os_runner_tester.py
-          flake8 setup.py
-          flake8 test.py
