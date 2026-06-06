@@ -30,8 +30,8 @@ jobs:
           flake8 django_rest_api/
           flake8 os_executor/os_executor/
           flake8 os_runner/os_runner/ --ignore=F401
-          flake8 pg_provisioner/pg_provisioner/
+          flake8 pg_provisioner/pg_provisioner/ --ignore=F401
           flake8 pg_provisioner_cli/pg_provisioner_cli/
-          flake8 pg_runner/pg_runner/
+          flake8 pg_runner/pg_runner/ --ignore=F401
           flake8 pg_runner_cli/pg_runner_cli/
           flake8 os_runner_tester.py

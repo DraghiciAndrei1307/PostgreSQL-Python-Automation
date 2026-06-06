@@ -6,6 +6,7 @@ import os
 import logging
 from os_runner import OsRunner
 
+
 class PgProvisioner:
 
     """
@@ -61,12 +62,15 @@ class PgProvisioner:
             '/home/student/PostgreSQL-Ansible-Automation/ansible/'
         )
 
+        base_path = "/home/student/PostgreSQL-Ansible-Automation/ansible"
+        inv_path = f"{base_path}/inventories/"
+        playbook_path = f"{base_path}/provision_postgresql_VM.yml"
+        pass_file = "/home/student/.vault_pass"
+
         result = self.os_runner.run_cmd(
             input_command=(
-                'ansible-playbook '
-                '-i /home/student/PostgreSQL-Ansible-Automation/ansible/inventories/ '
-                '/home/student/PostgreSQL-Ansible-Automation/ansible/provision_postgresql_VM.yml '
-                '--vault-password-file /home/student/.vault_pass '
+                f'ansible-playbook -i {inv_path} {playbook_path} '
+                f'--vault-password-file {pass_file} '
                 f'-e vm_name_user_input="{name}" '
                 f'-e base_vm_name_user_input="{base}" '
                 f'-e vm_id="{vm_id}"'),

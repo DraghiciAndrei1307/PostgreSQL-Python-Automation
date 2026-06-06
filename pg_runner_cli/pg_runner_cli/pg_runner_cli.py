@@ -7,12 +7,14 @@ from pg_runner import PgRunner
 
 # ------------------ PgRunner functions ------------------------ #
 
+
 def setup_pg_runner():
     """
     Sets up the pg runner.
     :return:
     """
     return PgRunner()
+
 
 @click.group()
 @click.pass_context
@@ -25,6 +27,7 @@ def cli(ctx):
     :return:
     """
     ctx.ensure_object(dict)
+
 
 @cli.command()
 @click.option(
@@ -45,6 +48,7 @@ def check_postgresql_status(ctx, version):
     pg_runner = setup_pg_runner()
     pg_runner.check_postgresql_status(version=version)
 
+
 @cli.command()
 @click.option(
     '--version',
@@ -63,6 +67,7 @@ def start_pg(ctx, version):
     """
     pg_runner = setup_pg_runner()
     pg_runner.start_pg(version=version)
+
 
 @cli.command()
 @click.option(
@@ -83,6 +88,7 @@ def stop_pg(ctx, version):
     pg_runner = setup_pg_runner()
     pg_runner.stop_pg(version=version)
 
+
 @cli.command()
 @click.pass_context
 def backup_pg(ctx):
@@ -95,6 +101,7 @@ def backup_pg(ctx):
     pg_runner = setup_pg_runner()
     pg_runner.backup_pg()
 
+
 @cli.command()
 @click.pass_context
 def backup_info(ctx):
@@ -106,6 +113,7 @@ def backup_info(ctx):
     """
     pg_runner = setup_pg_runner()
     pg_runner.backup_info()
+
 
 @cli.command()
 @click.pass_context

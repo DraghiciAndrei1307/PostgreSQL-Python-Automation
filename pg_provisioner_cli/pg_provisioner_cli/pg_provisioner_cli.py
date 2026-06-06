@@ -4,12 +4,14 @@ This module acts as a CLI interface for pg_provisioner.
 import click
 from pg_provisioner import PgProvisioner
 
+
 def setup_pg_provisioner():
     """
     Sets up the pg provisioner.
     :return:
     """
     return PgProvisioner()
+
 
 @click.group()
 @click.pass_context
@@ -37,9 +39,14 @@ def provision_new_pg_vm(ctx):
         pg_provisioner = setup_pg_provisioner()
         print(
             f"DEBUG: PgProvisioner instantiated. "
-            f"Vault pass set: {bool(pg_provisioner.vault_password)}"
+            f"Vault pass set: "
+            f"{bool(pg_provisioner.vault_password)}"
         )
-        pg_provisioner.start_pg_vm_provisioning(name='test', base='bronze', vm_id='1')
+        pg_provisioner.start_pg_vm_provisioning(
+            name='test',
+            base='bronze',
+            vm_id='1'
+        )
         print("DEBUG: Command sent to OsRunner.")
     except Exception as e:
         print(f"DEBUG ERROR: {e}")

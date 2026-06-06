@@ -51,15 +51,16 @@ class PgRunner:
             # add the new FileHandler to the logger
             self.logger.addHandler(self.file_handler)
 
-
     def check_postgresql_status(self, version):
         """
         This method checks if the cluster is running or not.
         """
 
         result = self.os_runner.run_cmd(
-            input_command='sudo -S systemctl status '
-                    f'postgresql-{version}',
+            input_command=(
+                'sudo -S systemctl status '
+                f'postgresql-{version}'
+            ),
             input_data=f"{self.become_password}\n"
         )
 
@@ -79,9 +80,14 @@ class PgRunner:
         )
 
         if result['success']:
-            self.logger.info("PostgreSQL 14 database server is UP and RUNNING.")
+            self.logger.info(
+                "PostgreSQL 14 database server is UP and RUNNING."
+            )
         else:
-            self.logger.error("PostgreSQL 14 database encountered an error: {result['stderr']}")
+            self.logger.error(
+                "PostgreSQL 14 database encountered "
+                f"an error: {result['stderr']}"
+            )
 
     def stop_pg(self, version):
         """
@@ -110,10 +116,12 @@ class PgRunner:
         """
 
         result = self.os_runner.run_cmd(
-            input_command='sudo -S -u postgres pgbackrest '
-                    '--stanza=demo '
-                    '--type=full '
-                    '--log-level-console=info backup',
+            input_command=(
+                'sudo -S -u postgres pgbackrest '
+                '--stanza=demo '
+                '--type=full '
+                '--log-level-console=info backup'
+            ),
             input_data=f"{self.become_password}\n"
         )
 
@@ -125,12 +133,12 @@ class PgRunner:
                 result['stderr']
             )
 
-    def restore_pg(self, version=14 , path='/var/lib/pgsql'):
+    def restore_pg(self, version=14, path='/var/lib/pgsql'):
         """
             This method performs database 'default' restore.
         """
 
-        pg_data_path= path + version + '/data'
+        pg_data_path = path + version + '/data'
 
         # remove everything from pg_data_path
 
@@ -141,7 +149,10 @@ class PgRunner:
         if remove_pg_data_contents_result['success']:
 
             self.os_runner.run_cmd(
-                input_command='sudo -S -u postgres pgbackrest --stanza=demo restore'
+                input_command=(
+                    'sudo -S -u postgres pgbackrest '
+                    '--stanza=demo restore'
+                )
             )
 
     def backup_info(self):
@@ -181,10 +192,12 @@ class PgRunner:
             This method checks the pgbackrest stanza.
         """
         result = self.os_runner.run_cmd(
-            input_command='sudo -S -u postgres pgbackrest '
-                    '--stanza=demo '
-                    '--log-level-console=info '
-                    'check',
+            input_command=(
+                'sudo -S -u postgres pgbackrest '
+                '--stanza=demo '
+                '--log-level-console=info '
+                'check'
+            ),
             input_data=f"{self.become_password}\n"
         )
 
