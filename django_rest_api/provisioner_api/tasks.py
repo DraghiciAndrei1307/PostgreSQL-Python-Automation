@@ -9,10 +9,10 @@ from celery import Celery
 
 from pg_provisioner import PgProvisioner
 
-from .models import PostgreSQLVM
-
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'api_config.settings')
 django.setup()
+
+from .models import PostgreSQLVM
 
 app = Celery('provisioner', broker='redis://localhost:6379/0')
 
