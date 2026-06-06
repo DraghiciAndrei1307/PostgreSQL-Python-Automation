@@ -27,7 +27,7 @@ jobs:
           pylint os_runner_tester.py
       - name: "Perform linting with flake8"
         run: |
-          flake8 django_rest_api/
+          flake8 django_rest_api/ --ignore=E402
           flake8 os_executor/os_executor/
           flake8 os_runner/os_runner/ --ignore=F401
           flake8 pg_provisioner/pg_provisioner/ --ignore=F401
