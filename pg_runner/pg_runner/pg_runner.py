@@ -86,7 +86,8 @@ class PgRunner:
         else:
             self.logger.error(
                 "PostgreSQL 14 database encountered "
-                f"an error: {result['stderr']}"
+                "an error: %s",
+                {result['stderr']}
             )
 
     def stop_pg(self, version):
