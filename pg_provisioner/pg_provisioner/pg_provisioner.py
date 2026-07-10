@@ -78,3 +78,18 @@ class PgProvisioner:
         )
 
         return result
+
+    def perform_full_backup(self, instance_name='test'):
+
+        base_path = "/home/student/PostgreSQL-Ansible-Automation/ansible"
+        inv_path = f"{base_path}/inventories/"
+        playbook_path = f"{base_path}/perform_full_backup_individual_target.yml"
+        pass_file = "/home/student/.vault_pass"
+
+        return self.os_runner.run_cmd(
+            input_command=(
+                f'ansible-playbook -i {inv_path} {playbook_path} '
+                f'--vault-password-file {pass_file} '
+                f'-e db_instance="{instance_name}" "'
+            )
+        )

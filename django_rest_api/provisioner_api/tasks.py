@@ -12,14 +12,13 @@ from pg_provisioner import PgProvisioner
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'api_config.settings')
 django.setup()
 
-from .models import PostgreSQLVM
+from .models import PostgreSQLVM, PostgreSQLBackup
 
 app = Celery('provisioner', broker='redis://localhost:6379/0')
 
 
 @app.task
 def run_ansible_provisioning_task(instance_id):
-
     """
         This is the function represents the task
         executed by the Celery worker. Notice the
@@ -49,3 +48,29 @@ def run_ansible_provisioning_task(instance_id):
 
     vm.save(update_fields=['status'])
     return f"Provisioning finished for {vm.vm_name} with status {vm.status}."
+
+@app.task
+def perform_backup(instance_id):
+    """
+        This is yet another task that deals with
+        the full backup right after the provisioning was
+        performed.
+    """
+
+    try:
+        backup = PostgreSQLBackup.objects.get(id=instance_id)
+    except PostgreSQLBackup.DoesNotExist:
+        return "Backup not found"
+
+    provisioner = PgProvisioner()
+
+    cluster = backup.instance
+
+    result = provisioner.perform_backup(instance_name=cluster.vm.vm_name)
+
+    print(result)
+
+    # this needs adjustment with the actual fields that need to be updated
+    #vm_save(update_fields=['status'])
+
+    return f"Full backup performed for the {str(cluster)}"

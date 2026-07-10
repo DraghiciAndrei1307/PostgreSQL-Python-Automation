@@ -32,8 +32,8 @@ jobs:
           files: |
             django_rest_api/dist/*.whl
             django_rest_api/dist/*.tar.gz
-          tag_name: django_rest_api-v0.0.6
-          name: Release of 'django_rest_api' v0.0.6
+          tag_name: django_rest_api-v0.0.1
+          name: Release of 'django_rest_api' v0.0.1
           body: "The official release of the django_rest_api_draghici_andrei package."
 #      - name: Build and Publish 'django_rest_api' package to PyPi
 #        env:

@@ -108,6 +108,33 @@ class PostgreSQLBackupViewSet(viewsets.ModelViewSet):
     serializer_class = PostgreSQLBackupSerializer
     permissions_classes = [permissions.IsAuthenticated]
 
+    def perform_create(self, serializer):
+        """
+            We override the perform_create method so that we
+            trigger the backup procedure when a request is made.
+        """
+
+        instance = serializer.save(status="Queued")
+
+        # we need to import a task here
+
+        from .tasks import perform_backup
+        perform_backup.delay(instance.id)
+
+    def partial_update(self, request, *args, **kwargs):
+        """
+            We override the partial_update method so that we
+            can update the instance with the all necessary data
+            of the recently created backup.
+        """
+
+        response = super().partial_update(request, *args, **kwargs)
+
+        # We extract the data we received from the request
+
+        # stanza = request.data.get('satanza')
+        # ...
+
 
 class PostgreSQLUserViewSet(viewsets.ModelViewSet):
     """
