@@ -68,6 +68,8 @@ def perform_backup(instance_id):
 
     result = provisioner.perform_full_backup(instance_name=cluster.vm.vm_name)
 
+    print(f'Instance name is: {cluster.vm.vm_name}')
+
     print(result)
 
     # this needs adjustment with the actual fields that need to be updated
