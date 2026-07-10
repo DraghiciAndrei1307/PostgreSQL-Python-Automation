@@ -66,7 +66,7 @@ def perform_backup(instance_id):
 
     cluster = backup.instance
 
-    result = provisioner.perform_backup(instance_name=cluster.vm.vm_name)
+    result = provisioner.perform_full_backup(instance_name=cluster.vm.vm_name)
 
     print(result)
 
