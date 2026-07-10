@@ -90,6 +90,6 @@ class PgProvisioner:
             input_command=(
                 f'ansible-playbook -i {inv_path} {playbook_path} '
                 f'--vault-password-file {pass_file} '
-                f'-e db_instance={instance_name} "'
+                f'-e db_instance={instance_name} '
             )
         )
