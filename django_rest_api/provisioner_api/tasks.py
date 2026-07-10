@@ -71,6 +71,7 @@ def perform_backup(instance_id):
     print(result)
 
     # this needs adjustment with the actual fields that need to be updated
+
     #vm_save(update_fields=['status'])
 
     return f"Full backup performed for the {str(cluster)}"
