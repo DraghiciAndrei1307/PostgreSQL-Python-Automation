@@ -146,16 +146,46 @@ class PostgreSQLBackup(models.Model):
 
     # ATTRIBUTES
 
-    type = models.CharField(max_length=200)
-    stanza = models.CharField(max_length=200)
-    start_at = models.DateTimeField()
-    stop_at = models.DateTimeField()
-    wal_start = models.CharField(max_length=200)
-    wal_stop = models.CharField(max_length=200)
-    cluster_size = models.CharField(max_length=200)  # needs adjustment
-    cluster_backup_size = models.CharField(max_length=200)  # needs adjustment
-    backup_size = models.CharField(max_length=200)  # needs adjustment
-    backup_set_size = models.CharField(max_length=200)  # needs adjustment
+    type = models.CharField(max_length=200, default='full')
+    stanza = models.CharField(max_length=200, default='demo')
+    start_at = models.DateTimeField(auto_now_add=True)
+    stop_at = models.DateTimeField(auto_now_add=True)
+    wal_start = models.CharField(
+        max_length=200,
+        unique=True,
+        blank=True,
+        null=True
+    )
+    wal_stop = models.CharField(
+        max_length=200,
+        unique=True,
+        blank=True,
+        null=True
+    )
+    cluster_size = models.CharField(
+        max_length=200,
+        unique=True,
+        blank=True,
+        null=True
+    )  # needs adjustment
+    cluster_backup_size = models.CharField(
+        max_length=200,
+        unique=True,
+        blank=True,
+        null=True
+    )  # needs adjustment
+    backup_size = models.CharField(
+        max_length=200,
+        unique=True,
+        blank=True,
+        null=True
+    )  # needs adjustment
+    backup_set_size = models.CharField(
+        max_length=200,
+        unique=True,
+        blank=True,
+        null=True
+    )  # needs adjustment
 
     # Foreign Keys
 
