@@ -114,7 +114,7 @@ class PostgreSQLBackupViewSet(viewsets.ModelViewSet):
             trigger the backup procedure when a request is made.
         """
 
-        instance = serializer.save(status="Queued")
+        instance = serializer.save()
 
         # we need to import a task here
 
