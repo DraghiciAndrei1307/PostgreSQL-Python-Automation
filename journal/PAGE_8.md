@@ -13,4 +13,5 @@ the backup is completed to update metrics like the timestamp, wal start/stop, da
 - add Flower for monitoring
 - add Celery Beat to schedule the backups
 - change the broker into RabbitMQ
+- create a script that resets the master node...
 
