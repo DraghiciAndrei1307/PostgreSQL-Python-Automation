@@ -18,6 +18,7 @@
 """
 
 import os
+import shlex
 import subprocess
 from pathlib import Path
 import shutil
@@ -313,14 +314,19 @@ class OsRunner:
                 "data": []
             }
 
-    def run_cmd(self, input_command, input_data=None):
+    def run_cmd(self, input_command, input_data=None, env=None):
         """
         This method runs a command and returns the output.
         :param input_command:
         :return:
         """
 
-        command = input_command.split()
+        command = shlex.split(input_command)
+
+        process_env = os.environ.copy()
+
+        if env:
+            process_env.update(env)
 
         try:
             cmd = subprocess.run(
