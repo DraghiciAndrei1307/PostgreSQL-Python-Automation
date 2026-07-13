@@ -335,7 +335,8 @@ class OsRunner:
                 check=False,
                 input=input_data,
                 capture_output=True,
-                text=True
+                text=True,
+                env=process_env
             )
             return {
                 "success": cmd.returncode == 0,
