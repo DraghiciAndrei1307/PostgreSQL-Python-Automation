@@ -69,6 +69,7 @@ class PgProvisioner:
 
         result = self.os_runner.run_cmd(
             input_command=(
+                f'ANSIBLE_LOG_PATH={base_path}/provisioning_logs/provisioning-{name}.log'
                 f'ansible-playbook -i {inv_path} {playbook_path} '
                 f'--vault-password-file {pass_file} '
                 f'-e vm_name_user_input="{name}" '
