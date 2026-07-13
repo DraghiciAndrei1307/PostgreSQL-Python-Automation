@@ -86,7 +86,7 @@ class PgProvisioner:
 
         return result
 
-    def perform_full_backup(self, instance_name='test'):
+    def perform_full_backup(self, instance_name='test', backup_id='1'):
 
         base_path = "/home/student/PostgreSQL-Ansible-Automation/ansible"
         inv_path = f"{base_path}/inventories/"
@@ -98,5 +98,6 @@ class PgProvisioner:
                 f'ansible-playbook -i {inv_path} {playbook_path} '
                 f'--vault-password-file {pass_file} '
                 f'-e db_instance={instance_name} '
+                f'-e backup_id={backup_id}'
             )
         )

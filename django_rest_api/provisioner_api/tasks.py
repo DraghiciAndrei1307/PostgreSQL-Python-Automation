@@ -66,18 +66,24 @@ def perform_backup(instance_id):
     except PostgreSQLBackup.DoesNotExist:
         return "Backup not found"
 
+    backup.status = "In Progress"
+    backup.save()
+
     provisioner = PgProvisioner()
 
     cluster = backup.instance
 
-    result = provisioner.perform_full_backup(instance_name=cluster.vm.vm_name)
-
-    print(f'Instance name is: {cluster.vm.vm_name}')
+    result = provisioner.perform_full_backup(instance_name=cluster.vm.vm_name, backup_id=instance_id)
 
     print(result)
 
+    if result['success']:
+        backup.status = "Finished"
+    else:
+        backup.status = "Failed"
+
     # this needs adjustment with the actual fields that need to be updated
 
-    #vm_save(update_fields=['status'])
+    backup.save(update_fields=['status'])
 
     return f"Full backup performed for the {str(cluster)}"

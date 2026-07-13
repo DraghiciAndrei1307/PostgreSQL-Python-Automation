@@ -132,8 +132,38 @@ class PostgreSQLBackupViewSet(viewsets.ModelViewSet):
 
         # We extract the data we received from the request
 
-        # stanza = request.data.get('satanza')
-        # ...
+        stanza = request.data.get('stanza')
+        backup_type = request.data.get('backup_type')
+        backup_id = request.data.get('backup_id')
+        start_at = request.data.get('start_time')
+        stop_at = request.data.get('stop_time')
+        wal_start = request.data.get('wal_start')
+        wal_stop = request.data.get('wal_stop')
+        db_size_mb = request.data.get('db_size_mb')
+        backup_size_mb = request.data.get('backup_size_mb')
+        backup_set_size = request.data.get('backup_set_size')
+        backup_size = request.data.get('backup_size')
+
+        if stanza and backup_type and backup_id and start_at and stop_at and wal_start and wal_stop and db_size_mb and backup_size_mb and backup_set_size and backup_size and backup_size:
+            pk = kwargs.get('pk')
+            PostgreSQLBackup.objects.filter(pk=pk).update(
+                stanza=stanza,
+                backup_type=backup_type,
+                backup_id=backup_id,
+                status="Finished",
+                start_time=start_at,
+                stop_time=stop_at,
+                wal_start=wal_start,
+                wal_stop=wal_stop,
+                cluster_size=db_size_mb,
+                cluster_backup_size=backup_size_mb,
+                backup_set_size=backup_set_size,
+                backup_size=backup_size,
+            )
+
+            print(f"\nThe data of the backup with the ID {pk} was updated\n")
+
+        return response
 
 
 class PostgreSQLUserViewSet(viewsets.ModelViewSet):

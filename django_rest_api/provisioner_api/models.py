@@ -146,10 +146,33 @@ class PostgreSQLBackup(models.Model):
 
     # ATTRIBUTES
 
-    type = models.CharField(max_length=200, default='full')
-    stanza = models.CharField(max_length=200, default='demo')
-    start_at = models.DateTimeField(auto_now_add=True)
-    stop_at = models.DateTimeField(auto_now_add=True)
+    backup_type = models.CharField(
+        max_length=200,
+        blank=True,
+        null=True
+    )
+    backup_id = models.CharField(
+        max_length=200,
+        unique=True,
+        blank=True,
+        null=True
+    )
+    status = models.CharField(
+        max_length=200,
+        blank=True,
+        null=True
+    )
+    stanza = models.CharField(
+        max_length=200,
+        blank=True,
+        null=True
+    )
+    start_at = models.DateTimeField(
+        auto_now_add=True
+    )
+    stop_at = models.DateTimeField(
+        auto_now_add=True
+    )
     wal_start = models.CharField(
         max_length=200,
         unique=True,
