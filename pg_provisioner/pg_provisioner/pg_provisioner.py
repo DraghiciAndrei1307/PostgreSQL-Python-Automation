@@ -67,16 +67,23 @@ class PgProvisioner:
         playbook_path = f"{base_path}/provision_postgresql_VM.yml"
         pass_file = "/home/student/.vault_pass"
 
+        command = (
+            f'ANSIBLE_LOG_PATH={base_path}/provisioning_logs/provisioning-{name}.log '
+            f'ansible-playbook -i {inv_path} {playbook_path} '
+            f'--vault-password-file {pass_file} '
+            f'-e vm_name_user_input="{name}" '
+            f'-e base_vm_name_user_input="{base}" '
+            f'-e vm_id="{vm_id}"'
+        )
+
+        print(command)
+
         result = self.os_runner.run_cmd(
-            input_command=(
-                f'ANSIBLE_LOG_PATH={base_path}/provisioning_logs/provisioning-{name}.log '
-                f'ansible-playbook -i {inv_path} {playbook_path} '
-                f'--vault-password-file {pass_file} '
-                f'-e vm_name_user_input="{name}" '
-                f'-e base_vm_name_user_input="{base}" '
-                f'-e vm_id="{vm_id}"'),
+            input_command=command,
             input_data=f"{self.vault_password}\n"
         )
+
+        print(result)
 
         return result
 
