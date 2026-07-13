@@ -47,7 +47,11 @@ def run_ansible_provisioning_task(instance_id):
         vm.status = "Failed"
 
     vm.save(update_fields=['status'])
-    return f"Provisioning finished for {vm.vm_name} with status {vm.status}."
+    return (
+        f"Provisioning finished for {vm.vm_name} with status {vm.status}.\n"
+        f"RESULT: \n"
+        f"{result}"
+    )
 
 @app.task
 def perform_backup(instance_id):

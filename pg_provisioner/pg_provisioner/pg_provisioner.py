@@ -76,14 +76,10 @@ class PgProvisioner:
             f'-e vm_id="{vm_id}"'
         )
 
-        print(command)
-
         result = self.os_runner.run_cmd(
             input_command=command,
             input_data=f"{self.vault_password}\n"
         )
-
-        print(result)
 
         return result
 
