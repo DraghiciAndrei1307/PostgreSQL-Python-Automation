@@ -326,6 +326,8 @@ class OsRunner:
         process_env = os.environ.copy()
 
         if env:
+            if not isinstance(env, dict):
+                raise TypeError("env must be a dict")
             process_env.update(env)
 
         try:

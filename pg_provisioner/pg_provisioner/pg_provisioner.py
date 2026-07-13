@@ -79,7 +79,8 @@ class PgProvisioner:
             input_command=command,
             input_data=f"{self.vault_password}\n",
             env={
-                f'ANSIBLE_LOG_PATH={base_path}/provisioning_logs/provisioning-{name}.log'
+                f'ANSIBLE_LOG_PATH':
+                    f'{base_path}/provisioning_logs/provisioning-{name}.log'
             }
         )
 
