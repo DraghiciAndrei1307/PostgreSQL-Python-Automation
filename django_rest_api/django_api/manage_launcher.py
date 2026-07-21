@@ -16,7 +16,7 @@ def setup_django():
         that points to the settings.py of this package.
     """
 
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'api_config.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'django_api.settings')
     django.setup()
 
 

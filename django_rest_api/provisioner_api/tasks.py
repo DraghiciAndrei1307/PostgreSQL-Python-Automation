@@ -3,31 +3,20 @@
     executed by the Celery worker.
 """
 
-import os
-import django
-from celery import Celery
-from django.conf import settings
+from celery import shared_task
 
 from pg_provisioner import PgProvisioner
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'api_config.settings')
-django.setup()
+
 
 from .models import PostgreSQLVM, PostgreSQLBackup
 
-app = Celery('django_rest_api', broker='redis://localhost:6379/0')
-app.conf.enable_utc = False
-
-app.config_from_object(settings, namespace='CELERY')
-
-app.autodiscover_tasks()
-
-@app.task
-def run_ansible_provisioning_task(instance_id):
+@shared_task(bind=True)
+def run_ansible_provisioning_task(self, instance_id):
     """
         This is the function represents the task
-        executed by the Celery worker. Notice the
-        '@app.task' decorator.
+        executed by the Celery worker to start
+        the provisioning.
     """
 
     try:
@@ -58,8 +47,8 @@ def run_ansible_provisioning_task(instance_id):
         f"{result}"
     )
 
-@app.task(bind=True)
-def perform_backup(instance_id):
+@shared_task(bind=True)
+def perform_backup(self, instance_id):
     """
         This is yet another task that deals with
         the full backup right after the provisioning was
