@@ -12,6 +12,9 @@ from .serializers import GroupSerializer, UserSerializer, \
     PostgreSQLDatabaseSerializer, PostgreSQLBackupSerializer, \
     PostgreSQLUserSerializer
 
+from .backup_scheduler import BackupScheduler
+from .tasks import perform_backup
+
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -116,10 +119,16 @@ class PostgreSQLBackupViewSet(viewsets.ModelViewSet):
 
         instance = serializer.save()
 
-        # we need to import a task here
+        scheduler = BackupScheduler()
 
-        from .tasks import perform_backup
-        perform_backup.delay(instance.id)
+        # decide if the backup should be executed now
+        # or to be scheduled
+
+        if instance.execute_at:
+            scheduler.schedule(instance_id=instance.id, schedule_at=instance.execute_at)
+        else:
+            from .tasks import perform_backup
+            perform_backup.delay(instance.id)
 
     def partial_update(self, request, *args, **kwargs):
         """

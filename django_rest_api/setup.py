@@ -32,6 +32,7 @@ setup(
         'click',
         'pg_provisioner_draghici_andrei',
         'djangorestframework',
+        'django-celery-beat'
     ],
     include_package_data=True,
     entry_points={

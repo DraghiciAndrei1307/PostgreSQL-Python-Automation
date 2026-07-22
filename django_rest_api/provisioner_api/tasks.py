@@ -7,8 +7,6 @@ from celery import shared_task
 
 from pg_provisioner import PgProvisioner
 
-
-
 from .models import PostgreSQLVM, PostgreSQLBackup
 
 @shared_task(bind=True)

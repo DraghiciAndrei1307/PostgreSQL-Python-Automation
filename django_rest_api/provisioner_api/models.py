@@ -156,6 +156,10 @@ class PostgreSQLBackup(models.Model):
         blank=True,
         null=True
     )
+    execute_at = models.DateTimeField(
+        null=True,
+        blank=True
+    )
     status = models.CharField(
         max_length=200,
         blank=True,
