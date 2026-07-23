@@ -317,3 +317,7 @@ Observation: I set up the scheduler inside the `/usr/local/bin/run_celerybeat.sh
 `Celery Beat` as a `systemd` service, it might not set up the `django_celery_beat.schedulers.DatabaseScheduler` but 
 another scheduler named `celery.beat.PersistentScheduler` which I do not know why but it cannot detect the 
 `PeriodicTask`s created.  
+
+# also add here the debugging commands used and maybe talk about the IntervalSchedule after implementatiom
+
+# I need to create a test standard to test the scheduler
