@@ -16,7 +16,7 @@ import json
 
 class BackupScheduler:
 
-    def schedule(self, instance_id, schedule_at):
+    def schedule_once(self, instance_id, schedule_at):
         # create the schedule for the Celery Beat
         # we will use perform_backup task here
         clocked, _ = ClockedSchedule.objects.get_or_create(
@@ -28,5 +28,25 @@ class BackupScheduler:
             task="provisioner_api.tasks.perform_backup",
             clocked=clocked,
             one_off=True,
+            args=json.dumps([instance_id])
+        )
+
+    def schedule_every(self, instance_id, period):
+        pass
+
+    def schedule_cron(self, instance_id, schedule_at):
+        # create the schedule for the Celery Beat
+        # we will use perform_backup task here
+        # The task will be executed regularly
+
+        clocked, _ = ClockedSchedule.objects.get_or_create(
+            clocked_time=schedule_at,
+        )
+
+        PeriodicTask.objects.create(
+            name=f"backup-{instance_id}",
+            task="provisioner_api.tasks.perform_backup",
+            clocked=clocked,
+            one_off=False,
             args=json.dumps([instance_id])
         )
