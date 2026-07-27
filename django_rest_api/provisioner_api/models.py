@@ -148,18 +148,18 @@ class BackupSchedule(models.Model):
 
     class ScheduleType(models.TextChoices):
         """Represents the ScheduleType enum."""
-        IMMEDIATE = 'IMMEDIATE', "Immediate"
-        ONCE = 'ONCE', "Once"
-        INTERVAL = 'INTERVAL', "Interval"
-        CRON = 'CRON', "Cron"
+        IMMEDIATE = 'IMMEDIATE'
+        ONCE = 'ONCE'
+        INTERVAL = 'INTERVAL'
+        CRON = 'CRON'
 
     class Period(models.TextChoices):
-        SECOND = 'SECOND', "Second"
-        MINUTE = 'MINUTE', "Minute"
-        HOUR = 'HOUR', "Hour"
-        DAY = 'DAY', "Day"
-        WEEK = 'WEEK', "Week"
-        MONTH = 'MONTH', "Month"
+        SECOND = 'SECOND'
+        MINUTE = 'MINUTE'
+        HOUR = 'HOUR'
+        DAY = 'DAY'
+        WEEK = 'WEEK'
+        MONTH = 'MONTH'
 
     schedule_type = models.CharField(
         max_length=20,
