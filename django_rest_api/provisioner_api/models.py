@@ -154,12 +154,12 @@ class BackupSchedule(models.Model):
         CRON = 'CRON'
 
     class Period(models.TextChoices):
-        SECOND = 'SECOND'
-        MINUTE = 'MINUTE'
-        HOUR = 'HOUR'
-        DAY = 'DAY'
-        WEEK = 'WEEK'
-        MONTH = 'MONTH'
+        SECOND = 'SECONDS'
+        MINUTE = 'MINUTES'
+        HOUR = 'HOURS'
+        DAY = 'DAYS'
+        WEEK = 'WEEKS'
+        MONTH = 'MONTHS'
 
     schedule_type = models.CharField(
         max_length=20,
