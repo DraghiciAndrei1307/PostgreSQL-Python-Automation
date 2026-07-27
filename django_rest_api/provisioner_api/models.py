@@ -1,8 +1,11 @@
 """
     In this module we define our models.
 """
+from datetime import datetime
+from django.utils import timezone
 
 from django.db import models
+from django.core.exceptions import ValidationError
 
 
 class PostgreSQLVM(models.Model):
@@ -140,6 +143,140 @@ class PostgreSQLDatabase(models.Model):
         ]
 
 
+class BackupSchedule(models.Model):
+    """Represents the Backup schedule."""
+
+    class ScheduleType(models.TextChoices):
+        """Represents the ScheduleType enum."""
+        IMMEDIATE = 'IMMEDIATE', "Immediate"
+        ONCE = 'ONCE', "Once"
+        INTERVAL = 'INTERVAL', "Interval"
+        CRON = 'CRON', "Cron"
+
+    class Period(models.TextChoices):
+        SECOND = 'SECOND', "Second"
+        MINUTE = 'MINUTE', "Minute"
+        HOUR = 'HOUR', "Hour"
+        DAY = 'DAY', "Day"
+        WEEK = 'WEEK', "Week"
+        MONTH = 'MONTH', "Month"
+
+    schedule_type = models.CharField(
+        max_length=20,
+        choices=ScheduleType.choices,
+        default=ScheduleType.IMMEDIATE,
+    )
+
+    # for schedule_type = "ONCE"
+
+    execute_at = models.DateTimeField(
+        null=True,
+        blank=True
+    )
+
+    # for schedule_type = "INTERVAL"
+
+    every = models.IntegerField(
+        null=True,
+        blank=True
+    )
+
+    period = models.CharField(
+        max_length=20,
+        choices=Period.choices,
+    )
+
+    # for schedule_type = "CRON"
+
+    cron = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+    )
+
+    @classmethod
+    def create_immediate(cls):
+        """Represents the immediate schedule."""
+
+        return cls(
+            schedule_type=cls.ScheduleType.IMMEDIATE,
+        )
+
+    @classmethod
+    def create_once(cls, execute_at: datetime):
+        """Represents the once schedule."""
+
+        return cls(
+            schedule_type = cls.ScheduleType.ONCE,
+            execute_at = execute_at
+        )
+
+    @classmethod
+    def create_interval(cls, every: int, period: Period):
+        """Represents the interval schedule."""
+
+        return cls(
+            schedule_type = cls.ScheduleType.INTERVAL,
+            every = every,
+            period = period
+        )
+
+
+    @classmethod
+    def create_cron(cls, cron: str):
+        """Represents the cron schedule."""
+        return cls(
+            schedule_type = cls.ScheduleType.CRON,
+            cron = cron
+        )
+
+    def validate(self):
+        if self.schedule_type == BackupSchedule.ScheduleType.IMMEDIATE:
+            if self.execute_at is not None:
+                raise ValidationError("execute_at is only allowed for ONCE schedules.")
+            if self.every is not None:
+                raise ValidationError("every is only allowed for INTERVAL schedules.")
+            if self.period is not None:
+                raise ValidationError("period is only allowed for INTERVAL schedules.")
+            if self.cron is not None:
+                raise ValidationError("cron is only allowed for CRON schedules.")
+
+        elif self.schedule_type == BackupSchedule.ScheduleType.ONCE:
+            if self.execute_at is None:
+                raise ValidationError("execute_at is required for ONCE schedules.")
+            if self.every is not None:
+                raise ValidationError("every is only allowed for INTERVAL schedules.")
+            if self.period is not None:
+                raise ValidationError("period is only allowed for INTERVAL schedules.")
+            if self.cron is not None:
+                raise ValidationError("cron is only allowed for CRON schedules.")
+            if self.execute_at < timezone.now():
+                raise ValidationError("the time you mentioned is from the past.")
+
+        elif self.schedule_type == BackupSchedule.ScheduleType.INTERVAL:
+            if self.execute_at is not None:
+                raise ValidationError("execute_at is only allowed for ONCE schedules.")
+            if self.every is None:
+                raise ValidationError("every is required for INTERVAL schedules.")
+            if self.period is None:
+                raise ValidationError("period is required for INTERVAL schedules.")
+            if self.cron is not None:
+                raise ValidationError("cron is only allowed for CRON schedules.")
+            if self.every <= 0:
+                raise ValidationError("there cannot be negative or zero intervals.")
+
+        elif self.schedule_type == BackupSchedule.ScheduleType.CRON:
+            if self.execute_at is not None:
+                raise ValidationError("execute_at is only allowed for ONCE schedules.")
+            if self.every is not None:
+                raise ValidationError("every is only allowed for INTERVAL schedules.")
+            if self.period is not None:
+                raise ValidationError("period is only allowed for INTERVAL schedules.")
+            if self.cron is None:
+                raise ValidationError("cron is required for CRON schdeules.")
+        else:
+            raise ValidationError("Unknown schedule type.")
+
 class PostgreSQLBackup(models.Model):
 
     """Represents the PostgreSQL backup."""
@@ -151,14 +288,14 @@ class PostgreSQLBackup(models.Model):
         blank=True,
         null=True
     )
+    schedule = models.OneToOneField(
+        BackupSchedule,
+        on_delete=models.CASCADE,
+    )
     backup_id = models.CharField(
         max_length=200,
         blank=True,
         null=True
-    )
-    execute_at = models.DateTimeField(
-        null=True,
-        blank=True
     )
     status = models.CharField(
         max_length=200,
@@ -222,6 +359,7 @@ class PostgreSQLBackup(models.Model):
 
     def __str__(self):
         return f"PostgreSQL Instance: {self.instance}"
+
 
 
 class PostgreSQLUser(models.Model):

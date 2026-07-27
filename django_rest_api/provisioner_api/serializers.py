@@ -5,7 +5,7 @@ from django.contrib.auth.models import Group, User
 from rest_framework import serializers
 
 from .models import PostgreSQLVM, PostgreSQLDatabase, \
-    PostgreSQLBackup, PostgreSQLInstance, PostgreSQLUser
+    PostgreSQLBackup, PostgreSQLInstance, PostgreSQLUser, BackupSchedule
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -84,10 +84,22 @@ class PostgreSQLDatabaseSerializer(serializers.HyperlinkedModelSerializer):
         fields = '__all__'
 
 
+class BackupScheduleSerializer(serializers.HyperlinkedModelSerializer):
+
+    """
+        This is the serializer for the BackupSchedule model.
+    """
+
+    class Meta:
+        model = BackupSchedule
+        fields = '__all__'
+
 class PostgreSQLBackupSerializer(serializers.HyperlinkedModelSerializer):
     """
         This is the serializer for the PostgreSQLBackup model.
     """
+
+    schedule = BackupScheduleSerializer()
 
     class Meta:
         """
@@ -96,8 +108,50 @@ class PostgreSQLBackupSerializer(serializers.HyperlinkedModelSerializer):
         """
 
         model = PostgreSQLBackup
-        fields = '__all__'
+        fields = ('backup_type', 'schedule', 'instance')
 
+    def create(self, validated_data):
+
+        """
+            We overite the create() method
+            so that we can create a BackupSchedule
+            instance before we create the PostgreSQLBackup.
+        """
+
+        # extract schedule data
+
+        schedule_data = validated_data.pop('schedule')
+
+        schedule_type = schedule_data['schedule_type']
+
+        # create the BackupSchedule instance
+
+        backup_schedule = None
+
+        if schedule_type == BackupSchedule.ScheduleType.IMMEDIATE:
+            backup_schedule = BackupSchedule.create_immediate()
+        elif schedule_type == BackupSchedule.ScheduleType.ONCE:
+            backup_schedule = BackupSchedule.create_once(
+                execute_at=schedule_data['execute_at']
+            )
+        elif schedule_type == BackupSchedule.ScheduleType.INTERVAL:
+            backup_schedule = BackupSchedule.create_interval(
+                every=schedule_data['every'],
+                period=schedule_data['period']
+            )
+        elif schedule_type == BackupSchedule.ScheduleType.CRON:
+            backup_schedule = BackupSchedule.create_cron(
+                cron=schedule_data['cron'],
+            )
+
+        backup_schedule.save()
+
+        # return the PostgreSQLBackup instance
+
+        return PostgreSQLBackup.objects.create(
+            schedule=backup_schedule,
+            **validated_data
+        )
 
 class PostgreSQLUserSerializer(serializers.HyperlinkedModelSerializer):
     """

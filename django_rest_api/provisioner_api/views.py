@@ -117,18 +117,14 @@ class PostgreSQLBackupViewSet(viewsets.ModelViewSet):
             trigger the backup procedure when a request is made.
         """
 
-        instance = serializer.save()
+        backup = serializer.save()
 
         scheduler = BackupScheduler()
 
-        # decide if the backup should be executed now
-        # or to be scheduled
+        scheduler.schedule(backup)
 
-        if instance.execute_at:
-            scheduler.schedule(instance_id=instance.id, schedule_at=instance.execute_at)
-        else:
-            from .tasks import perform_backup
-            perform_backup.delay(instance.id)
+
+
 
     def partial_update(self, request, *args, **kwargs):
         """
