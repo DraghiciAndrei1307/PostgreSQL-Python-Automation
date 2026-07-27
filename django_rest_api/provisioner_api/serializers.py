@@ -84,7 +84,7 @@ class PostgreSQLDatabaseSerializer(serializers.HyperlinkedModelSerializer):
         fields = '__all__'
 
 
-class BackupScheduleSerializer(serializers.HyperlinkedModelSerializer):
+class BackupScheduleSerializer(serializers.ModelSerializer):
 
     """
         This is the serializer for the BackupSchedule model.
@@ -94,7 +94,7 @@ class BackupScheduleSerializer(serializers.HyperlinkedModelSerializer):
         model = BackupSchedule
         fields = '__all__'
 
-class PostgreSQLBackupSerializer(serializers.HyperlinkedModelSerializer):
+class PostgreSQLBackupSerializer(serializers.ModelSerializer):
     """
         This is the serializer for the PostgreSQLBackup model.
     """
