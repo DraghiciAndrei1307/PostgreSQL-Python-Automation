@@ -152,6 +152,7 @@ class BackupSchedule(models.Model):
         ONCE = 'ONCE'
         INTERVAL = 'INTERVAL'
         CRON = 'CRON'
+        BENCHMARK = 'BENCHMARK'
 
     class Period(models.TextChoices):
         SECOND = 'SECONDS'
@@ -228,6 +229,15 @@ class BackupSchedule(models.Model):
         return cls(
             schedule_type = cls.ScheduleType.CRON,
             cron = cron
+        )
+
+    @classmethod
+    def create_benchmark(cls, execute_at: datetime):
+        """Represents the benchmark schedule."""
+
+        return cls(
+            schedule_type = cls.ScheduleType.BENCHMARK,
+            execute_at = execute_at
         )
 
     def validate(self):

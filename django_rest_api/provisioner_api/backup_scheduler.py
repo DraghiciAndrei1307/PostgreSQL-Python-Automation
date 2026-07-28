@@ -13,6 +13,8 @@ from django_celery_beat.models import (
     CrontabSchedule,
 )
 
+from datetime import timedelta
+
 import json
 
 class BackupScheduler:
@@ -26,7 +28,8 @@ class BackupScheduler:
             self.schedule_interval(instance_id=backup.id, every=backup.schedule.every, period=backup.schedule.period)
         elif backup.schedule.schedule_type == BackupSchedule.ScheduleType.CRON:
             self.schedule_cron(backup.id, backup.schedule.cron)
-
+        elif backup.schedule.schedule_type == BackupSchedule.ScheduleType.BENCHMARK:
+            self.schedule_benchmark_test(backup.id, number_of_iterations=50, start_at=backup.schedule.execute_at)
 
     def schedule_once(self, instance_id, schedule_at):
         # create the schedule for the Celery Beat
@@ -73,3 +76,10 @@ class BackupScheduler:
             crontab=crontab,
             args=json.dumps([instance_id]),
         )
+
+    def schedule_benchmark_test(self, instance_id, number_of_iterations, start_at):
+
+        start_at_copy = start_at
+        for i in range(number_of_iterations):
+            start_at_copy += timedelta(seconds=i*10)
+            self.schedule_once(instance_id, start_at_copy)

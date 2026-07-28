@@ -143,6 +143,10 @@ class PostgreSQLBackupSerializer(serializers.ModelSerializer):
             backup_schedule = BackupSchedule.create_cron(
                 cron=schedule_data['cron'],
             )
+        elif schedule_type == BackupSchedule.ScheduleType.BENCHMARK:
+            backup_schedule = BackupSchedule.create_benchmark(
+                execute_at=schedule_data['execute_at'],
+            )
 
         backup_schedule.save()
 
