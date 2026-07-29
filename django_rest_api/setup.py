@@ -30,6 +30,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         'click',
+        'psutil',
         'pg_provisioner_draghici_andrei',
         'djangorestframework',
         'django-celery-beat'
