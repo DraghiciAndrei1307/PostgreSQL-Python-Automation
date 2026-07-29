@@ -13,7 +13,7 @@ following kind of tasks:
 To do that, I changed my architecture in order to have the flow displayed on Figure 1. 
 
 <p align="center">
-  <img src="../docs/diagrams/Celery_Scheduler_Integration_Architecture.png" alt="Celery Scheduler Integration Architecture"><br>
+  <img src="../docs/diagrams/Celery_and_Celery_Beat_Scheduler_Integration_Architecture.png" alt="Celery Scheduler Integration Architecture"><br>
   <em>Figure 1: Backup Scheduling Flow Using Celery Beat</em>
 </p>
 
