@@ -314,6 +314,41 @@ class OsRunner:
                 "data": []
             }
 
+    def append_to_file(
+            self,
+            name='metrics_history.log',
+            content='',
+            path='/home/student',
+            mode='0644'
+    ):
+        """Appends content as a new line in a file (creates parent folders if missing)."""
+        try:
+            # Creează folderul de destinație dacă nu există
+            os.makedirs(path, exist_ok=True)
+
+            file_path = os.path.join(path, name)
+
+            with open(file_path, 'a', encoding='utf-8') as f:
+                f.write(content + '\n')
+
+            self.change_mode(file_path, mode)
+
+            return {
+                "success": True,
+                "stdout": f"Successfully appended to {file_path}",
+                "stderr": "",
+                "exit_code": 0,
+                "data": []
+            }
+        except Exception as e:
+            return {
+                "success": False,
+                "stdout": "",
+                "stderr": f"Error: {e}",
+                "exit_code": 2,
+                "data": []
+            }
+
     def run_cmd(self, input_command, input_data=None, env=None):
         """
         This method runs a command and returns the output.

@@ -2,12 +2,17 @@
     This module contains the task definitions. Tasks
     executed by the Celery worker.
 """
+import json
+from datetime import datetime
 
 from celery import shared_task
 
+
 from pg_provisioner import PgProvisioner
+from os_runner import OsRunner
 
 from .models import PostgreSQLVM, PostgreSQLBackup
+from .benchmark_utils import ResourceMonitor
 
 @shared_task(bind=True)
 def run_ansible_provisioning_task(self, instance_id):
@@ -53,29 +58,50 @@ def perform_backup(self, instance_id):
         performed.
     """
 
-    try:
-        backup = PostgreSQLBackup.objects.get(id=instance_id)
-    except PostgreSQLBackup.DoesNotExist:
-        return "Backup not found"
+    with ResourceMonitor() as monitor:
 
-    backup.status = "In Progress"
-    backup.save()
+        try:
+            backup = PostgreSQLBackup.objects.get(id=instance_id)
+        except PostgreSQLBackup.DoesNotExist:
+            return "Backup not found"
 
-    provisioner = PgProvisioner()
+        backup.status = "In Progress"
+        backup.save()
 
-    cluster = backup.instance
+        provisioner = PgProvisioner()
 
-    result = provisioner.perform_full_backup(instance_name=cluster.vm.vm_name, backup_id=instance_id)
+        cluster = backup.instance
 
-    print(result)
+        result = provisioner.perform_full_backup(instance_name=cluster.vm.vm_name, backup_id=instance_id)
 
-    if result['success']:
-        backup.status = "Finished"
-    else:
-        backup.status = "Failed"
+        print(result)
 
-    # this needs adjustment with the actual fields that need to be updated
+        if result['success']:
+            backup.status = "Finished"
+        else:
+            backup.status = "Failed"
 
-    backup.save(update_fields=['status'])
+        # this needs adjustment with the actual fields that need to be updated
 
-    return f"Full backup performed for the {str(cluster)}"
+        backup.save(update_fields=['status'])
+
+    metrics = monitor.get_metrics()
+
+    record = {
+        "timestamp": datetime.now().isoformat(),
+        "task_name": "perform_backup",
+        "instance_id": instance_id,
+        "cluster_name": str(cluster),
+        "backup_status": backup.status,
+        "metrics": metrics,
+    }
+
+    runner = OsRunner()
+
+    runner.append_to_file(
+        name="metrics_history.log",
+        content=json.dumps(record),
+        path="/home/student/PostgreSQL-Ansible-Automation/ansible/backup_logs",
+    )
+
+    return f"Backup finished for {cluster}. Metrics saved to /home/student/metrics_history.log"
