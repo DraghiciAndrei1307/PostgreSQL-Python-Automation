@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net">
   <diagram name="Page-1" id="hRtU2IS7AAuWawRRE3gb">
-    <mxGraphModel dx="837" dy="914" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="941" dy="971" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -134,13 +134,13 @@
           <mxGeometry height="120" width="120" x="1107.75" y="380" as="geometry" />
         </mxCell>
         <mxCell id="JPP2CQrshmR9FM9S0Kz4-98" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;color: light-dark(rgb(255, 255, 0), rgb(255, 255, 0));&quot;&gt;backup.status = &quot;In Progress&quot;&lt;/font&gt;" vertex="1">
-          <mxGeometry height="40" width="241.5" x="868.5" y="960" as="geometry" />
+          <mxGeometry height="40" width="241.5" x="866.25" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="CQGEuin6eOrKywQ9Hp6J-1" edge="1" parent="1" source="JPP2CQrshmR9FM9S0Kz4-100" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="JPP2CQrshmR9FM9S0Kz4-68">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="JPP2CQrshmR9FM9S0Kz4-100" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=light-dark(#000000,#FFFF00);" value="perform_backup.delay()" vertex="1">
-          <mxGeometry height="40" width="200" x="828.5" y="800" as="geometry" />
-        </mxCell>
-        <mxCell id="JPP2CQrshmR9FM9S0Kz4-106" edge="1" parent="1" source="JPP2CQrshmR9FM9S0Kz4-100" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="JPP2CQrshmR9FM9S0Kz4-98">
-          <mxGeometry relative="1" as="geometry" />
+          <mxGeometry height="40" width="200" x="827" y="720" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
