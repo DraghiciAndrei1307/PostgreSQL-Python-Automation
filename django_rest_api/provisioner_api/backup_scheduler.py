@@ -29,7 +29,7 @@ class BackupScheduler:
         elif backup.schedule.schedule_type == BackupSchedule.ScheduleType.CRON:
             self.schedule_cron(backup.id, backup.schedule.cron)
         elif backup.schedule.schedule_type == BackupSchedule.ScheduleType.BENCHMARK:
-            self.schedule_benchmark_test(backup.id, number_of_iterations=1000, start_at=backup.schedule.execute_at)
+            self.schedule_benchmark_test(backup.id, number_of_iterations=50, start_at=backup.schedule.execute_at)
 
     def schedule_once(self, instance_id, schedule_at):
         # create the schedule for the Celery Beat

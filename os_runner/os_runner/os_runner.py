@@ -18,6 +18,7 @@
 """
 
 import os
+import csv
 import shlex
 import subprocess
 from pathlib import Path
@@ -340,6 +341,68 @@ class OsRunner:
                 "exit_code": 0,
                 "data": []
             }
+        except Exception as e:
+            return {
+                "success": False,
+                "stdout": "",
+                "stderr": f"Error: {e}",
+                "exit_code": 2,
+                "data": []
+            }
+
+    def append_to_csv(
+            self,
+            name='metrics_history.csv',
+            data=None,
+            path='/home/student',
+            mode='0644'
+    ):
+        """
+        Creates CSV if missing and appends a new row.
+        """
+
+        try:
+            os.makedirs(path, exist_ok=True)
+
+            file_path = os.path.join(path, name)
+
+            fieldnames = [
+                "timestamp",
+                "task_name",
+                "instance_id",
+                "cluster_name",
+                "status",
+                "duration_seconds",
+                "cpu_avg",
+                "cpu_peak",
+                "ram_avg_mb",
+                "ram_peak_mb",
+            ]
+
+            file_exists = os.path.isfile(file_path) and os.path.getsize(file_path) > 0
+
+            with open(file_path, 'a', newline='', encoding='utf-8') as f:
+
+                writer = csv.DictWriter(
+                    f,
+                    fieldnames=fieldnames
+                )
+
+                if not file_exists:
+                    writer.writeheader()
+
+                writer.writerow(data or {})
+
+            self.change_mode(file_path, mode)
+
+            return {
+                "success": True,
+                "stdout": f"Successfully appended to {file_path}",
+                "stderr": "",
+                "exit_code": 0,
+                "data": []
+            }
+
         except Exception as e:
             return {
                 "success": False,

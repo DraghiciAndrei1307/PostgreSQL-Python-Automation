@@ -3,6 +3,7 @@
     executed by the Celery worker.
 """
 import json
+import time
 from datetime import datetime
 
 from celery import shared_task
@@ -58,6 +59,8 @@ def perform_backup(self, instance_id):
         performed.
     """
 
+    start_time = time.time()
+
     with ResourceMonitor() as monitor:
 
         try:
@@ -85,14 +88,19 @@ def perform_backup(self, instance_id):
 
         backup.save(update_fields=['status'])
 
+    duration = round(time.time() - start_time, 2)
+
     metrics = monitor.get_metrics()
 
+    timestamp = datetime.now().isoformat()
+
     record = {
-        "timestamp": datetime.now().isoformat(),
+        "timestamp": timestamp,
         "task_name": "perform_backup",
         "instance_id": instance_id,
         "cluster_name": str(cluster),
         "backup_status": backup.status,
+        "duration_seconds": duration,
         "metrics": metrics,
     }
 
@@ -102,6 +110,25 @@ def perform_backup(self, instance_id):
         name="metrics_history.log",
         content=json.dumps(record),
         path="/home/student/PostgreSQL-Ansible-Automation/ansible/backup_logs",
+    )
+
+    runner.append_to_csv(
+        name="metrics_history.csv",
+        path="/home/student/PostgreSQL-Ansible-Automation/ansible/backup_logs",
+        data={
+            "timestamp": timestamp,
+            "task_name": "perform_backup",
+            "instance_id": instance_id,
+            "cluster_name": str(cluster),
+            "status": backup.status,
+            "duration_seconds": duration,
+
+            "cpu_avg": metrics.get("cpu", {}).get("cpu_percent", 0),
+            "cpu_peak": metrics.get("cpu", {}).get("peak_cpu", 0),
+
+            "ram_avg_mb": metrics.get("ram", {}).get("ram_mean", 0),
+            "ram_peak_mb": metrics.get("ram", {}).get("peak_ram", 0),
+        }
     )
 
     return f"Backup finished for {cluster}. Metrics saved to /home/student/metrics_history.log"
