@@ -4,8 +4,14 @@
 from django.contrib.auth.models import Group, User
 from rest_framework import serializers
 
-from django_rest_api.provisioner_api.models import PostgreSQLVM, PostgreSQLDatabase, \
-    PostgreSQLBackup, PostgreSQLInstance, PostgreSQLUser, BackupSchedule
+from ..models import (
+    PostgreSQLVM,
+    PostgreSQLDatabase,
+    PostgreSQLBackup,
+    PostgreSQLInstance,
+    PostgreSQLUser,
+    BackupSchedule
+)
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):

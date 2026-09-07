@@ -7,7 +7,7 @@ from django.utils import timezone
 from django.db import models
 from django.core.exceptions import ValidationError
 
-from definitions import BackupClass
+from .definitions import BackupClass
 
 class VM(models.Model):
 
