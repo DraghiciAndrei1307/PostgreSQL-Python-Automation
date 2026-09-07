@@ -1,5 +1,5 @@
 """
-    In this module we define our models.
+    In this module we define our infrastructure models.
 """
 from datetime import datetime
 from django.utils import timezone
@@ -7,56 +7,12 @@ from django.utils import timezone
 from django.db import models
 from django.core.exceptions import ValidationError
 
+from .infrastructure import VM
+from .definitions import BackupClass
 
-class PostgreSQLVM(models.Model):
+class PostgreSQLVM(VM):
 
     """ Represents a VM provisioned with PostgreSQL."""
-
-    # ATTRIBUTES
-
-    vm_name = models.CharField(max_length=200, default='')
-    base_vm_name = models.CharField(max_length=200, default='')
-    ipv4_address = models.GenericIPAddressField(
-        unique=True,
-        blank=True,
-        null=True
-    )
-    status = models.CharField(max_length=200, default='Started')
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    # GETTERS
-    @property
-    def hostname(self):
-        """
-            Returns the hostname of this VM.
-            This is a getter.
-        """
-
-        return f"{self.base_vm_name}-{self.vm_name}"
-
-    # SETTERS
-
-    # OPERATORS
-
-    def __str__(self):
-        """Returns the hostname of this VM."""
-        return self.hostname
-
-    # CONSTRAINTS
-
-    class Meta:
-        """
-            Here we define the unique constraints.
-        """
-
-        constraints = [
-            models.UniqueConstraint(
-                fields=['vm_name', 'base_vm_name'],
-                name='unique_hostname_constraint',
-            ),
-        ]
-
 
 class PostgreSQLInstance(models.Model):
     """Represents PostgreSQL cluster."""
@@ -89,7 +45,6 @@ class PostgreSQLInstance(models.Model):
                 name='unique_port_per_vm',
             )
         ]
-
 
 class PostgreSQLDatabase(models.Model):
 
@@ -141,7 +96,6 @@ class PostgreSQLDatabase(models.Model):
                 name='unique_name_instance_owner',
             )
         ]
-
 
 class BackupSchedule(models.Model):
     """Represents the Backup schedule."""
@@ -287,7 +241,7 @@ class BackupSchedule(models.Model):
         else:
             raise ValidationError("Unknown schedule type.")
 
-class PostgreSQLBackup(models.Model):
+class PostgreSQLBackup(BackupClass):
 
     """Represents the PostgreSQL backup."""
 
@@ -361,6 +315,7 @@ class PostgreSQLBackup(models.Model):
         on_delete=models.CASCADE
     )
 
+
     # GETTERS
 
     # SETTERS
@@ -368,9 +323,7 @@ class PostgreSQLBackup(models.Model):
     # OPERATORS
 
     def __str__(self):
-        return f"PostgreSQL Instance: {self.instance}"
-
-
+        return f"PostgreSQL Backup: {self.backup_id}"
 
 class PostgreSQLUser(models.Model):
     """
