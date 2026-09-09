@@ -23,11 +23,12 @@ from provisioner_api import views
 router = routers.DefaultRouter()
 router.register(r"users", views.UserViewSet)
 router.register(r"groups", views.GroupViewSet)
-router.register(r'vms', views.PostgreSQLVMViewSet)
-router.register(r'instances', views.PostgreSQLInstanceViewSet)
-router.register(r'dbs', views.PostgreSQLDatabaseViewSet)
-router.register(r'backups', views.PostgreSQLBackupViewSet)
-router.register(r'psql-users', views.PostgreSQLUserViewSet)
+router.register(r"inf/vms", views.InfrastructureVMViewSet)
+router.register(r'postgres/vms', views.PostgreSQLVMViewSet)
+router.register(r'postgres/instances', views.PostgreSQLInstanceViewSet)
+router.register(r'postgres/dbs', views.PostgreSQLDatabaseViewSet)
+router.register(r'postgres/backups', views.PostgreSQLBackupViewSet)
+router.register(r'postgres/users', views.PostgreSQLUserViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

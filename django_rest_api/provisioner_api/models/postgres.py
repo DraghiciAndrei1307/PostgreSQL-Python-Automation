@@ -245,6 +245,13 @@ class PostgreSQLBackup(BackupClass):
 
     """Represents the PostgreSQL backup."""
 
+    class BackupType(models.TextChoices):
+        FULL = ('FULL', 'full')
+        INCREMENTAL = ('INCREMENTAL', 'incremental')
+        DIFFERENTIAL = ('DIFFERENTIAL', 'differential')
+        PITR = ('PITR', 'pitr')
+
+
     # ATTRIBUTES
 
     backup_type = models.CharField(

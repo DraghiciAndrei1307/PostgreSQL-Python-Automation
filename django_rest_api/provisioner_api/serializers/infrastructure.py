@@ -12,6 +12,7 @@ from ..models import (
     PostgreSQLUser,
     BackupSchedule
 )
+from ..models.infrastructure import InfrastructureVM
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -43,6 +44,15 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         model = Group
         fields = ["url", "name"]
 
+
+class InfrastructureVMSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    This is the serializer for the InfrastructureVM model.
+    """
+    class Meta:
+        model = InfrastructureVM
+        fields = '__all__'
+        read_only_fields = ['status']
 
 class PostgreSQLVMSerializer(serializers.HyperlinkedModelSerializer):
     """

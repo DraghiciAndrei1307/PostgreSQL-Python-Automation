@@ -7,10 +7,17 @@ from rest_framework import permissions, viewsets
 
 from .models import PostgreSQLVM, PostgreSQLDatabase, \
     PostgreSQLInstance, PostgreSQLBackup, PostgreSQLUser
-from .serializers import GroupSerializer, UserSerializer, \
-    PostgreSQLVMSerializer, PostgreSQLInstanceSerializer, \
-    PostgreSQLDatabaseSerializer, PostgreSQLBackupSerializer, \
-    PostgreSQLUserSerializer
+from .models.infrastructure import InfrastructureVM
+from .serializers import (
+    GroupSerializer,
+    UserSerializer,
+    PostgreSQLVMSerializer,
+    PostgreSQLInstanceSerializer,
+    PostgreSQLDatabaseSerializer,
+    PostgreSQLBackupSerializer,
+    PostgreSQLUserSerializer,
+    InfrastructureVMSerializer
+)
 
 from .backup_scheduler import BackupScheduler
 from .tasks import perform_backup
@@ -35,6 +42,37 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+class InfrastructureVMViewSet(viewsets.ModelViewSet):
+    """
+        This is the ViewSet for the InfrastructureVM model.
+    """
+    queryset = InfrastructureVM.objects.all().order_by("-created_at")
+    serializer_class = InfrastructureVMSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def partial_update(self, request, *args, **kwargs):
+        """
+            We override the partial_update method so that we
+            can update the IPv4 address of the VM when performing
+            a PATCH request.
+
+            The partial_update method is similar to the 'update'
+             method, except that all fields for the update will
+             be optional. This suits best for a PATCH request
+             when we need to update certain fields.
+        """
+
+        response = super().partial_update(request, *args, **kwargs)
+
+        ip_sent = request.data.get('ipv4_address')
+
+        if ip_sent:
+            pk = kwargs.get('pk')
+            InfrastructureVM.objects.filter(pk=pk).update(ipv4_address=ip_sent)
+
+            print(f"\nThe IP {ip_sent} was saved for the VM with ID {pk}\n")
+
+        return response
 
 class PostgreSQLVMViewSet(viewsets.ModelViewSet):
     """

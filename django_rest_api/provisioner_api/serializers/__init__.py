@@ -1,5 +1,6 @@
 from .infrastructure import (UserSerializer,
                              GroupSerializer,
+                             InfrastructureVMSerializer,
                              PostgreSQLVMSerializer,
                              PostgreSQLInstanceSerializer,
                              PostgreSQLDatabaseSerializer,
